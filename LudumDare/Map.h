@@ -39,7 +39,7 @@ public:
 	void moveEntities();
 	bool checkMove(int x, int y,int or);
 
-
+	char getTab(int i, int j){ return tableau[i][j];};
 
 	
 };

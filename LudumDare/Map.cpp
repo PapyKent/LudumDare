@@ -29,7 +29,7 @@ void Map::chargerTableau(string nomFichier){
 
 				fichier.get(tmp);
 				if(tmp>='0' && tmp<='9')
-				tableau[i][j]=tmp;
+					tableau[i][j]=tmp;
 				else j--;
 				//	fichier.get(tableau[i][j]);
 			}
@@ -69,18 +69,18 @@ void Map::moveEntities(){
 
 		if(checkMove(actualX,actualY,cursor->getEntityOrientation())){
 			if(cursor->getEntityOrientation()==1){ 
-				cursor->setPosY(actualY-cursor->getEntitySpeed());
+				cursor->setPosY(cursor->getPosY()-cursor->getEntitySpeed());
 			}
 			else if(cursor->getEntityOrientation()==2){
-				cursor->setPosX(actualX+cursor->getEntitySpeed());
+				cursor->setPosX(cursor->getPosX()+cursor->getEntitySpeed());
 			}
 			else if(cursor->getEntityOrientation()==3){
-				cursor->setPosX(actualY+cursor->getEntitySpeed());
+				cursor->setPosX(cursor->getPosY()+cursor->getEntitySpeed());
 			}
 			else if(cursor->getEntityOrientation()==4){
-				cursor->setPosY(actualX-cursor->getEntitySpeed());
+				cursor->setPosY(cursor->getPosX()-cursor->getEntitySpeed());
 			}
-			
+
 		}
 	}
 }
@@ -106,50 +106,157 @@ bool Map:: checkMove(int x, int y, int or){
 }
 
 
+
+void Map::addEntity(Entity* c){
+	tableEntities.push_back(*c);
+
+}
+
+void Map::removeEntity(string nom){
+
+	vector<Entity>::iterator cursor;
+	for(cursor= tableEntities.begin();cursor!=tableEntities.end();cursor++){
+		if(cursor->getNameEntity()==nom) tableEntities.erase(cursor);
+
+	}
+
+}
+
+
+Entity* Map::findEntity(int index){
+	int tmp=0;
+	vector<Entity>::iterator cursor;
+	for(cursor= tableEntities.begin();cursor!=tableEntities.end();cursor++){
+		if(tmp==index) return &tableEntities[tmp];
+
+	}
+
+}
+void Map::removeEntity(int index){
+
+	int tmp=0;
+	vector<Entity>::iterator cursor;
+	for(cursor= tableEntities.begin();cursor!=tableEntities.end();cursor++){
+		if(tmp==index) tableEntities.erase(cursor);
+		tmp++;
+	}
+}
+
+void Map::addItem(Item i){
+
+	tableItems.push_back(i);
+
+}
+void Map::removeItem(string nom){
+
+	vector<Item>::iterator cursor;
+	for(cursor= tableItems.begin();cursor!=tableItems.end();cursor++){
+		if(cursor->getnameItem()==nom) tableItems.erase(cursor);
+
+	}
+}
+void Map::removeItem(int index){
+	int tmp=0;
+	vector<Item>::iterator cursor;
+	for(cursor= tableItems.begin();cursor!=tableItems.end();cursor++){
+		if(tmp==index) tableItems.erase(cursor);
+		tmp++;
+	}
+
+}
+
+void Map::activateAI(void){
+	int actualX;int  actualY;
+	vector<Entity>::iterator cursor;
+	for(cursor= tableEntities.begin()+1;cursor!=tableEntities.end();cursor++){
+		actualX=cursor->getPosX();
+		actualY=cursor->getPosY();
+		actualX=((actualX+16)/CASE);
+		actualX=((actualY+16)/CASE);
+
+
+		//pattern test
+		if(checkMove(actualX,actualY,2)){
+			cursor->setEntityOrientation(2);
+		}
+		else if(checkMove(actualX,actualY,4)){
+			cursor->setEntityOrientation(4);
+		}
+		else if(checkMove(actualX,actualY,1)){
+			cursor->setEntityOrientation(1);
+		}
+		else if(checkMove(actualX,actualY,3)){
+			cursor->setEntityOrientation(3);
+		}
+		//fin pattern test
+
+	}
+
+	//zone de test !
+
+
 	
-	void Map::addEntity(Entity* c){
-		tableEntities.push_back(*c);
+	for(cursor= tableEntities.begin()+1;cursor!=tableEntities.end();cursor++){
+		if(cursor->getNameEntity()=="Pacman"){
+			actualX=cursor->getPosX();
+			actualY=cursor->getPosY();
+			actualX=((actualX+16)/CASE);
+			actualX=((actualY+16)/CASE);
 
-	}
 
-	void Map::removeEntity(string nom){
-		
-		vector<Entity>::iterator cursor;
-		for(cursor= tableEntities.begin();cursor!=tableEntities.end();cursor++){
-			if(cursor->getNameEntity()==nom) tableEntities.erase(cursor);
+			int heroX=(tableEntities.begin()->getPosX()+16)/CASE;
+			int heroY=(tableEntities.begin()->getPosY()+16)/CASE;
+
+			if(fabs((double)heroX-actualX)<=fabs((double)heroY-actualY)){
+
+				if(heroX-actualX<=0 && checkMove(actualX,actualY,4)){}//plus proche à gauche et peut aller à gauche
+
+				else if (heroX-actualX<=0 && checkMove(actualX,actualY,2)){}  //plus proche à gauche et peut aller à droite
+
+				else if(heroX-actualX>=0 && checkMove(actualX,actualY,2)){}//plus proche à droite et peut aller à droite
+
+				else if (heroX-actualX>=0 && checkMove(actualX,actualY,4)){}//plus proche à droite et peut aller à gauche
+
+				else if (checkMove(actualX,actualY,1)) {}//sinan il charge
+
+				else if (checkMove(actualX,actualY,3)) {}//sinan il rentre a sa maison
+
+				else if (checkMove(actualX,actualY,2)) {}//sinan il part à droite
+
+				else if (checkMove(actualX,actualY,4)) {}//sinan il part à gauche
+
+				//sinan c'est qu'il y a un gros probleme et qu'il se casse de l'écran, ce qui ne rentre pas dans le thème, du coup on gère pas et FATAL ERROR...
+			}
+
+
+			else if(fabs((double)heroX-actualX)>fabs((double)heroY-actualY)){
+
+				if(heroX-actualY<=0 && checkMove(actualX,actualY,3)){}//plus proche en bas et peut aller en bas
+
+				else if (heroX-actualY<=0 && checkMove(actualX,actualY,4)){} //plus proche en bas et peut aller a gauche
+
+
+				else if(heroX-actualY<=0 && checkMove(actualX,actualY,2)){}//plus proche en bas et peut aller a droite
+
+
+				else if (heroX-actualY>=0 && checkMove(actualX,actualY,1)){}//plus proche en haut et peut aller en haut
+
+				else if (heroX-actualY>=0 && checkMove(actualX,actualY,2)){}//plus proche en haut et peut aller à droite
+
+				else if (heroX-actualY>=0 && checkMove(actualX,actualY,4)){}//plus proche en haut et peut aller à gauche
+
+				else if (checkMove(actualX,actualY,4)) {}//sinan il charge
+
+				else if (checkMove(actualX,actualY,4)) {}//sinan il rentre a sa maison
+
+				else if (checkMove(actualX,actualY,2)) {}//sinan il part à droite
+
+				else if (checkMove(actualX,actualY,4)) {}//sinan il part à gauche
 			
-		}
-
-	}
-	void Map::removeEntity(int index){
-
-		int tmp=0;
-		vector<Entity>::iterator cursor;
-		for(cursor= tableEntities.begin();cursor!=tableEntities.end();cursor++){
-			if(tmp==index) tableEntities.erase(cursor);
-			tmp++;
+			//sinan c'est qu'il y a un gros probleme et qu'il se casse de l'écran, ce qui ne rentre pas dans le thème, du coup on gère pas et FATAL ERROR...
+			}
 		}
 	}
+}
 
-	void Map::addItem(Item i){
 
-		tableItems.push_back(i);
-
-	}
-	void Map::removeItem(string nom){
-
-		vector<Item>::iterator cursor;
-		for(cursor= tableItems.begin();cursor!=tableItems.end();cursor++){
-			if(cursor->getnameItem()==nom) tableItems.erase(cursor);
-			
-		}
-	}
-	void Map::removeItem(int index){
-		int tmp=0;
-		vector<Item>::iterator cursor;
-		for(cursor= tableItems.begin();cursor!=tableItems.end();cursor++){
-			if(tmp==index) tableItems.erase(cursor);
-			tmp++;
-		}
-
-	}

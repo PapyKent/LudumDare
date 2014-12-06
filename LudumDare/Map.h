@@ -41,7 +41,7 @@ public:
 	bool checkMove(int x, int y,int or);
 
 	char getTab(int i, int j){ return tableau[i][j];};
-
-	
+	void activateAI(void);
+	Entity* findEntity(int index);
 };
 

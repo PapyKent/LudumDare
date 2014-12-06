@@ -52,34 +52,51 @@ void Map::testAffiche(){
 	}
 }
 
-/*
 void Map::moveEntities(){
 
-		vector<Entity>::iterator cursor;
-		for(cursor= tableEntities.begin();cursor!=tableEntities.end();cursor++){
-			int actualX=cursor->getPosX();
-		   int  actualY=cursor->getPosY();
-		   actualX=((actualX+16)/CASE);
-		   actualX=((actualY+16)/CASE);
+	vector<Entity>::iterator cursor;
+	for(cursor= tableEntities.begin();cursor!=tableEntities.end();cursor++){
+		int actualX=cursor->getPosX();
+		int  actualY=cursor->getPosY();
+		actualX=((actualX+16)/CASE);
+		actualX=((actualY+16)/CASE);
 
 
 
-		   if(checkMove(actualX,actualY,cursor)){
-			   cursor->setPosX(actualX);
-			   cursor->setPosY(actualY);
-		   }
+		if(checkMove(actualX,actualY,cursor->getEntityOrientation())){
+			if(cursor->getEntityOrientation()==1){ 
+				cursor->setPosY(actualY-cursor->getEntitySpeed);
+			}
+			else if(cursor->getEntityOrientation()==2){
+				cursor->setPosX(actualX+cursor->getEntitySpeed);
+			}
+			else if(cursor->getEntityOrientation()==3){
+				cursor->setPosX(actualY+cursor->getEntitySpeed);
+			}
+			else if(cursor->getEntityOrientation()==4){
+				cursor->setPosY(actualX-cursor->getEntitySpeed);
+			}
+			
 		}
 	}
+}
 
-bool Map:: checkMove(int x, int y, Entity e){
-	if(e.getEntityOrientation==1){ 
-		if(tableau[x][y-e.getEntitySpeed]==5)return true;
+bool Map:: checkMove(int x, int y, int or){
+	if(or==1){ 
+		if(tableau[x][y-1]==0)return true;
+		else return false;
 	}
 	else if(or==2){
+		if(tableau[x+1][y]==0)return true;
+		else return false;
 	}
 	else if(or==3){
+		if(tableau[x][y+1]==0)return true;
+		else return false;
 	}
 	else if(or==4){
+		if(tableau[x-1][y]==0)return true;
+		else return false;
 	}
-
-}*/
+	return false;
+}

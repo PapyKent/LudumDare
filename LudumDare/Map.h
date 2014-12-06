@@ -7,13 +7,16 @@ class Item;
 class Map	
 {
 private:
+
+	char tableau [24][32];
+	
 	int level;
 	vector <Entity> tableEntities;
 	vector <Item> tableItems;
-	string directory;
+	
 public:
 	Map(void);
-	Map(string directory,int level =0);
+	Map(int level );
 	~Map(void);
 
 	Entity getEntity(int index);
@@ -30,8 +33,8 @@ public:
 	int getLevel(){return level;}
 	void setLevel(int l){level=l;}
 
-	void setDirectory(string d){directory=d;}
-	string getDirectory(){return directory;}
+	void testAffiche();
+	void chargerTableau(string nomFichier);
 
 
 };

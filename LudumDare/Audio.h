@@ -1,10 +1,11 @@
 #pragma once
 #include "Header.h"
+#include "SDL_mixer.h"
 
 class Audio
 {
 private:
-	string ambiant;
+	Mix_Music* ambiant;
 	vector <string> soundEffect;
 public:
 	Audio(void);

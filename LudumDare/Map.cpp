@@ -91,20 +91,27 @@ void Map::moveEntities(){
 
 bool Map:: checkMove(int x, int y, int or){
 	if(or==1){ 
-		if(tableau[x][y-1]==0)return true;
-		else return false;
+		if(y>0){
+			if(tableau[x][y-1]==0)return true;
+			else return false;}
 	}
 	else if(or==2){
-		if(tableau[x+1][y]==0)return true;
-		else return false;
+		if(x<32){
+			if(tableau[x+1][y]==0)return true;
+			else return false;
+		}
 	}
 	else if(or==3){
-		if(tableau[x][y+1]==0)return true;
-		else return false;
+		if(y<24){
+			if(tableau[x][y+1]==0)return true;
+			else return false;
+		}
 	}
 	else if(or==4){
-		if(tableau[x-1][y]==0)return true;
-		else return false;
+		if(x>0){
+			if(tableau[x-1][y]==0)return true;
+			else return false;
+		}
 	}
 	return false;
 }
@@ -172,13 +179,21 @@ void Map::removeItem(int index){
 void Map::activateAI(void){
 	int actualX;int  actualY;
 	vector<Entity>::iterator cursor;
-actualX=cursor->getPosX();
-			actualY=cursor->getPosY();
-			actualX=((actualX+16)/CASE);
-			actualX=((actualY+16)/CASE);
-	for(cursor= tableEntities.begin()+1;cursor!=tableEntities.end();cursor++){
+
+
+
+
+
+
+	for(cursor=tableEntities.begin();cursor!=tableEntities.end();cursor++){
+		actualX=cursor->getPosX();
+		actualY=cursor->getPosY();
+
+		actualX=((actualX+16)/CASE);
+		actualX=((actualY+16)/CASE);	
+
 		if(cursor->getNameEntity()=="Pacman"){
-			
+
 
 
 			int heroX=(tableEntities.begin()->getPosX()+16)/CASE;
@@ -234,7 +249,7 @@ actualX=cursor->getPosX();
 			}
 		}
 		else{
-	
+
 
 
 			//pattern test mobs
@@ -251,6 +266,7 @@ actualX=cursor->getPosX();
 				cursor->setEntityOrientation(3);
 			}
 		}
+
 	}
 }
 

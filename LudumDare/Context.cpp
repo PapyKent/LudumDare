@@ -37,20 +37,13 @@ Context::Context(void)
 	audioEngine->start(1);
 
 	map = new Map(gRenderer);
-	Mob* test = new Mob("test", 0, 0, 0, "pacTEST.bmp", 0, gRenderer);
+	Mob* test = new Mob("test", 0, 1, 0, "pacTEST.bmp", 0, gRenderer);
 	test->setPosX(50);
 	test->setPosY(50);
 	map->addEntity(test);
-
-	Mob* test2 = new Mob("test2", 0, 0, 0, "pacTEST.bmp", 0, gRenderer);
-	test2->setPosX(100);
-	test2->setPosY(100);
-	map->addEntity(test2);
+	map->addEntity(test);
 
 
-	for(int i=0;i<5;i++){
-		map->tabTest[i]=*test;
-	}
 }
 
 Context::~Context(void)
@@ -114,11 +107,11 @@ bool Context::launchGame(){
 				break;
 				} 
 			}
-			//map->activateAI();
-			//map->moveEntities();
+			map->activateAI();
+			map->moveEntities();
 
 
-			//		graphicEngine->displayBackground(*map);
+					graphicEngine->displayBackground(*map);
 			graphicEngine->displayEntities(map->getTableEntities());
 			graphicEngine->refresh();
 		}

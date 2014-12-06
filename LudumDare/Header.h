@@ -3,11 +3,12 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <stdio.h>
 
 
 using namespace std;
 
-const int ECRAN_L = 800;
-const int ECRAN_H = 600;
+const int SCREEN_WIDTH = 800;
+const int SCREEN_HEIGHT = 600;
 
 #endif

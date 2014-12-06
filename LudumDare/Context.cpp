@@ -42,6 +42,11 @@ Context::Context(void)
 	test->setPosY(50);
 	map->addEntity(test);
 
+	Mob* test2 = new Mob("test2", 0, 0, 0, "pacTEST.bmp", 0, gRenderer);
+	test2->setPosX(100);
+	test2->setPosY(100);
+	map->addEntity(test2);
+
 }
 
 Context::~Context(void)
@@ -75,7 +80,41 @@ bool Context::launchGame(){
 			{
 				quit = true;
 			}
-	//		graphicEngine->displayBackground(*map);
+			//User presses a key
+			else if( e.type == SDL_KEYDOWN )
+			{
+				//Select surfaces based on key press
+				switch( e.key.keysym.sym ) { 
+				case SDLK_UP:  {
+					map->getTableEntities().begin()->setEntityOrientation(1);
+					map->getTableEntities().begin()->setEntitySpeed(5); //valeur test
+							   }
+				break; 
+				case SDLK_DOWN: {
+					map->getTableEntities().begin()->setEntityOrientation(3);
+					map->getTableEntities().begin()->setEntitySpeed(5); //valeur test			
+								}
+				break; 
+				case SDLK_LEFT: {
+					map->getTableEntities().begin()->setEntityOrientation(4);
+					map->getTableEntities().begin()->setEntitySpeed(5); //valeur test			
+								}
+				break;
+				case SDLK_RIGHT: {
+					map->getTableEntities().begin()->setEntityOrientation(2);
+					map->getTableEntities().begin()->setEntitySpeed(5); //valeur test			 
+								 }
+				break; 
+
+				default: map->getTableEntities().begin()->setEntitySpeed(0);
+				break;
+				} 
+			}
+			//map->activateAI();
+			//map->moveEntities();
+
+
+			//		graphicEngine->displayBackground(*map);
 			graphicEngine->displayEntities(map->getTableEntities());
 			graphicEngine->refresh();
 		}

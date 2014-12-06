@@ -12,6 +12,7 @@ private:
 	char tableau [24][32];
 	
 	int level;
+	Entity tabTest[5] ;
 	vector <Entity> tableEntities;
 	vector <Item> tableItems;
 	

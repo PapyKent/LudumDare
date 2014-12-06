@@ -134,7 +134,7 @@ Entity* Map::findEntity(int index){
 		if(tmp==index) return &tableEntities[tmp];
 
 	}
-
+	return NULL;
 }
 void Map::removeEntity(int index){
 
@@ -172,40 +172,13 @@ void Map::removeItem(int index){
 void Map::activateAI(void){
 	int actualX;int  actualY;
 	vector<Entity>::iterator cursor;
-	for(cursor= tableEntities.begin()+1;cursor!=tableEntities.end();cursor++){
-		actualX=cursor->getPosX();
-		actualY=cursor->getPosY();
-		actualX=((actualX+16)/CASE);
-		actualX=((actualY+16)/CASE);
-
-
-		//pattern test
-		if(checkMove(actualX,actualY,2)){
-			cursor->setEntityOrientation(2);
-		}
-		else if(checkMove(actualX,actualY,4)){
-			cursor->setEntityOrientation(4);
-		}
-		else if(checkMove(actualX,actualY,1)){
-			cursor->setEntityOrientation(1);
-		}
-		else if(checkMove(actualX,actualY,3)){
-			cursor->setEntityOrientation(3);
-		}
-		//fin pattern test
-
-	}
-
-	//zone de test !
-
-
-	
-	for(cursor= tableEntities.begin()+1;cursor!=tableEntities.end();cursor++){
-		if(cursor->getNameEntity()=="Pacman"){
-			actualX=cursor->getPosX();
+actualX=cursor->getPosX();
 			actualY=cursor->getPosY();
 			actualX=((actualX+16)/CASE);
 			actualX=((actualY+16)/CASE);
+	for(cursor= tableEntities.begin()+1;cursor!=tableEntities.end();cursor++){
+		if(cursor->getNameEntity()=="Pacman"){
+			
 
 
 			int heroX=(tableEntities.begin()->getPosX()+16)/CASE;
@@ -256,8 +229,26 @@ void Map::activateAI(void){
 				else if (checkMove(actualX,actualY,2)) {}//sinan il part à droite
 
 				else if (checkMove(actualX,actualY,4)) {}//sinan il part à gauche
-			
-			//sinan c'est qu'il y a un gros probleme et qu'il se casse de l'écran, ce qui ne rentre pas dans le thème, du coup on gère pas et FATAL ERROR...
+
+				//sinan c'est qu'il y a un gros probleme et qu'il se casse de l'écran, ce qui ne rentre pas dans le thème, du coup on gère pas et FATAL ERROR...
+			}
+		}
+		else{
+	
+
+
+			//pattern test mobs
+			if(checkMove(actualX,actualY,2)){
+				cursor->setEntityOrientation(2);
+			}
+			else if(checkMove(actualX,actualY,4)){
+				cursor->setEntityOrientation(4);
+			}
+			else if(checkMove(actualX,actualY,1)){
+				cursor->setEntityOrientation(1);
+			}
+			else if(checkMove(actualX,actualY,3)){
+				cursor->setEntityOrientation(3);
 			}
 		}
 	}

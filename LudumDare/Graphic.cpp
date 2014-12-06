@@ -52,6 +52,7 @@ Graphic::Graphic(SDL_Window* wind ,SDL_Renderer* gRend)
 
 Graphic::~Graphic(void)
 {
+		SDL_DestroyTexture(bg);
 }
 
 void Graphic::displayBackground(Map map){

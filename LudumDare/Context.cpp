@@ -45,6 +45,7 @@ Context::~Context(void)
 
 	delete(graphicEngine);
 	delete(audioEngine);
+	delete(map);
 	//Destroy window
 	SDL_DestroyWindow( window );
 

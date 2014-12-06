@@ -19,7 +19,7 @@ Audio::Audio(void)
 
 Audio::~Audio(void)
 {
-	Mix_FreeMusic( ambiant );
+	Mix_FreeMusic(ambiant);
 	ambiant = NULL;
 	Mix_Quit();
 }

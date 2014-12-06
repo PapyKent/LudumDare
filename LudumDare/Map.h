@@ -43,5 +43,7 @@ public:
 	char getTab(int i, int j){ return tableau[i][j];};
 	void activateAI(void);
 	Entity* findEntity(int index);
+
+	vector<Entity> getTableEntities();
 };
 

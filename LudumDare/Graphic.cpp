@@ -10,18 +10,6 @@ Graphic::Graphic(SDL_Window* wind ,SDL_Renderer* gRend)
 
 	SDL_FreeSurface( loadedSurface );
 
-	//The window renderer
-	gRenderer = NULL;
-
-	//Create vsynced renderer for window
-	gRenderer = SDL_CreateRenderer( window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC );
-	if( gRenderer == NULL )
-	{
-		printf( "Renderer could not be created! SDL Error: %s\n", SDL_GetError() );
-	}
-	else{
-		SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
-	}
 
 	//Clip
 	clip[0].x = 0;
@@ -54,6 +42,11 @@ Graphic::Graphic(SDL_Window* wind ,SDL_Renderer* gRend)
 	clip[5].w = CASE;
 	clip[5].h = CASE;
 
+	clip[6].x = CASE*6;
+	clip[6].y = 0;
+	clip[6].w = CASE;
+	clip[6].h = CASE;
+
 }
 
 
@@ -63,14 +56,13 @@ Graphic::~Graphic(void)
 
 void Graphic::displayBackground(Map map){
 	SDL_RenderClear( gRenderer );
+	int test;
+	for(int i = 0; i < SCREEN_HEIGHT/32; i++){
+		for(int j = 0; j < SCREEN_WIDTH/32; j++){
 
-	SDL_RenderCopy(gRenderer, bg, NULL, NULL);
-	SDL_RenderPresent( gRenderer );
+			test=map.getTab(i, j)-'0';
+			render(bg, i*32, j*32, &clip[map.getTab(i, j)-'0']);
 
-	for(int i = 0; i < SCREEN_WIDTH/32; i++){
-		for(int j = 0; j < SCREEN_HEIGHT/32; j++){
-
-			render(bg, i*32, j*32, &clip[map.getTab(i, j)]);
 		}
 	}
 }
@@ -79,24 +71,33 @@ void Graphic::refresh(){
 	SDL_RenderPresent( gRenderer );
 }
 
+void Graphic::SDL_RenderDrawRect(){
+
+	SDL_SetRenderDrawColor(gRenderer, 255,0,0,255);
+	SDL_RenderClear(gRenderer);
+
+	SDL_Rect r;
+	r.x = 50;
+	r.y = 50;
+	r.w = 50;
+	r.h = 50;
+
+	SDL_RenderPresent(gRenderer);
+
+
+}
+
 void Graphic::render(SDL_Texture* mTexture, int x, int y, SDL_Rect* clip )
 {
-    //Set rendering space and render to screen
-    SDL_Rect renderQuad = { x, y, CASE, CASE };
-	
+	//Set rendering space and render to screen
+	SDL_Rect renderQuad = { y, x, CASE, CASE };
+
 	if( clip != NULL )
 	{
 		renderQuad.w = clip->w;
 		renderQuad.h = clip->h;
 	}
 
-    //Set clip rendering dimensions
-    if( clip != NULL )
-    {
-        renderQuad.w = clip->w;
-        renderQuad.h = clip->h;
-    }
-
-    //Render to screen
-    SDL_RenderCopy( gRenderer, mTexture, clip, &renderQuad );
+	//Render to screen
+	SDL_RenderCopy( gRenderer, mTexture, clip, &renderQuad );
 }

@@ -24,5 +24,6 @@ public:
 	bool launchGame();
 	bool restart();
 	bool quit();
+	bool createRenderer();
 };
 

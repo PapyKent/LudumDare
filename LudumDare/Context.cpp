@@ -6,30 +6,7 @@
 
 Context::Context(void)
 {
-	SDL_Window* window = NULL;
 
-	graphicEngine=new Graphic(window, gRenderer);
-
-	audioEngine=new Audio();
-	audioEngine->start(1);
-
-	map = new Map(gRenderer);
-
-}
-
-Context::~Context(void)
-{
-	delete(graphicEngine);
-	delete(audioEngine);
-	//Destroy window
-	SDL_DestroyWindow( window );
-
-	//Quit SDL subsystems
-	SDL_Quit();
-
-}
-
-bool Context::init(){
 	//Initialize SDL
 	if( SDL_Init( SDL_INIT_VIDEO ) < 0 )
 	{
@@ -49,22 +26,65 @@ bool Context::init(){
 			SDL_UpdateWindowSurface( window );
 		}
 	}
-	return true;
+
+	createRenderer();
+
+
+	graphicEngine=new Graphic(window, gRenderer);
+
+	audioEngine=new Audio();
+	audioEngine->start(1);
+
+	map = new Map(gRenderer);
+
 }
+
+Context::~Context(void)
+{
+
+
+	delete(graphicEngine);
+	delete(audioEngine);
+	//Destroy window
+	SDL_DestroyWindow( window );
+
+	//Quit SDL subsystems
+	SDL_Quit();
+
+}
+
+
 
 bool Context::launchGame(){
 	bool quit=false;
 	SDL_Event e;
 
+
+
 	while(!quit){
-		graphicEngine->displayBackground(*map);
-		graphicEngine->refresh();
+
+
 		while(SDL_PollEvent(&e) !=0){
 			if( e.type == SDL_QUIT )
 			{
 				quit = true;
 			}
+			graphicEngine->displayBackground(*map);
+			graphicEngine->refresh();
 		}
+	}
+
+	return true;
+}
+
+bool Context::createRenderer()
+{
+	gRenderer = SDL_CreateRenderer( window, -1, 0 );
+
+	if ( gRenderer == nullptr )
+	{
+		std::cout << "Failed to create renderer : " << SDL_GetError();
+		return false;
 	}
 
 	return true;

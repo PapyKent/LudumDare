@@ -5,8 +5,7 @@
 class Character;
 class Map;
 
-class Physic :
-	public Engine
+class Physic
 {
 private:
 	int* collisionMask;

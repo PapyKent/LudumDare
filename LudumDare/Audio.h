@@ -1,9 +1,7 @@
 #pragma once
-#include "engine.h"
 #include "Header.h"
 
-class Audio :
-	public Engine
+class Audio
 {
 private:
 	string ambiant;

@@ -67,23 +67,12 @@ void Graphic::displayBackground(Map map){
 	SDL_RenderCopy(gRenderer, bg, NULL, NULL);
 	SDL_RenderPresent( gRenderer );
 
-	/*
-	SDL_Rect renderQuad = { 0, 0, CASE, CASE };
-
-	if( clip != NULL )
-	{
-		renderQuad.w = clip->w;
-		renderQuad.h = clip->h;
-	}
-
-
 	for(int i = 0; i < SCREEN_WIDTH/32; i++){
 		for(int j = 0; j < SCREEN_HEIGHT/32; j++){
-			renderQuad.x= i*CASE;
-			renderQuad.y = i*CASE;
-			SDL_RenderCopy( gRenderer, bg, &clip[map.getTab(i, j)], &renderQuad);
+
+			render(bg, i*32, j*32, &clip[map.getTab(i, j)]);
 		}
-	}*/
+	}
 }
 
 void Graphic::refresh(){
@@ -94,6 +83,12 @@ void Graphic::render(SDL_Texture* mTexture, int x, int y, SDL_Rect* clip )
 {
     //Set rendering space and render to screen
     SDL_Rect renderQuad = { x, y, CASE, CASE };
+	
+	if( clip != NULL )
+	{
+		renderQuad.w = clip->w;
+		renderQuad.h = clip->h;
+	}
 
     //Set clip rendering dimensions
     if( clip != NULL )

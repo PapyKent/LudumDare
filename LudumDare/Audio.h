@@ -2,13 +2,13 @@
 #include "Header.h"
 #include "SDL_mixer.h"
 
-class Audio
-{
+class Audio{
 private:
 	Mix_Music* ambiant;
 	vector <string> soundEffect;
 public:
 	Audio(void);
 	~Audio(void);
+	void start(int);
 };
 

@@ -1,15 +1,18 @@
 #pragma once
 #include "Header.h"
-#include "SDL.h"
 #include "Map.h"
-#include "Engine.h"
+
+class Audio;
+class Graphic;
+class Physic;
 
 class Context
 {
 private:
 	Map map;
-	Engine engine;
-	SDL_Window* window;
+	Graphic* graphicEngine;
+	Audio* audioEngine;
+	Physic* physicEngine;
 public:
 	Context(void);
 	~Context(void);

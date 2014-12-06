@@ -1,14 +1,25 @@
 #include "Context.h"
+#include "Audio.h"
+#include "Graphic.h"
+#include "Physic.h"
 
 
 Context::Context(void)
 {
 	SDL_Window* window = NULL;
 
+	graphicEngine=new Graphic();
+
+	audioEngine=new Audio();
+	audioEngine->start(1);
+
+
 }
 
 Context::~Context(void)
 {
+	delete(graphicEngine);
+	delete(audioEngine);
 	//Destroy window
 	SDL_DestroyWindow( window );
 
@@ -18,7 +29,6 @@ Context::~Context(void)
 }
 
 bool Context::init(){
-
 	//Initialize SDL
 	if( SDL_Init( SDL_INIT_VIDEO ) < 0 )
 	{
@@ -36,9 +46,6 @@ bool Context::init(){
 		{
 			//Update the surface
 			SDL_UpdateWindowSurface( window );
-
-			//Wait two seconds
-			SDL_Delay( 2000 );
 		}
 	}
 	return true;

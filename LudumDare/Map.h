@@ -12,11 +12,12 @@ private:
 	char tableau [24][32];
 	
 	int level;
-	Entity tabTest[5] ;
+
 	vector <Entity> tableEntities;
 	vector <Item> tableItems;
 	
 public:
+	Entity tabTest[5] ;
 	Map(SDL_Renderer* gRenderer);
 	Map(SDL_Renderer* gRenderer,int level );
 	~Map(void);

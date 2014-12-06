@@ -47,6 +47,10 @@ Context::Context(void)
 	test2->setPosY(100);
 	map->addEntity(test2);
 
+
+	for(int i=0;i<5;i++){
+		map->tabTest[i]=*test;
+	}
 }
 
 Context::~Context(void)

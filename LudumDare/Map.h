@@ -8,7 +8,7 @@ class Map
 {
 private:
 	int level;
-	vector <Entity> tableEntitys;
+	vector <Entity> tableEntities;
 	vector <Item> tableItems;
 	string directory;
 public:

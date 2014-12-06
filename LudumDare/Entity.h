@@ -13,7 +13,7 @@ private:
 public:
 	Entity(void);
 	Entity(string nameEntity, int entitySpeed, int orientation,
-		int hp, string entitySprite, int frame=0);
+		int hp, string entitySprite, int frame);
 
 	~Entity(void);
 

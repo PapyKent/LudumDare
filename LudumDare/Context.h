@@ -9,7 +9,11 @@ class Physic;
 class Context
 {
 private:
-	Map map;
+
+
+	SDL_Window* window;
+	SDL_Renderer* gRenderer;
+	Map* map;
 	Graphic* graphicEngine;
 	Audio* audioEngine;
 	Physic* physicEngine;

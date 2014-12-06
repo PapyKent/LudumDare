@@ -5,12 +5,10 @@
 #include <vector>
 #include <stdio.h>
 #include "SDL.h"
+#include "SDL_mixer.h"
 
 
 using namespace std;
-
-SDL_Window* window;
-SDL_Renderer* gRenderer;
 
 const int SCREEN_WIDTH = 1024;
 const int SCREEN_HEIGHT = 768;

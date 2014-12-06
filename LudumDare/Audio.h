@@ -1,6 +1,5 @@
 #pragma once
 #include "Header.h"
-#include "SDL_mixer.h"
 
 class Audio{
 private:

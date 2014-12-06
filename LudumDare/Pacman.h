@@ -6,7 +6,7 @@ class Pacman :
 public:
 	Pacman(void);
 	Pacman(string nameEntity, int entitySpeed, int orientation,
-		int hp, string entitySprite, int frame);
+		int hp, string entitySprite, int frame, SDL_Renderer* gRenderer);
 	~Pacman(void);
 };
 

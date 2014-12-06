@@ -1,9 +1,14 @@
 #include "Graphic.h"
+#include "Map.h"
 
-
-Graphic::Graphic(void)
+Graphic::Graphic(SDL_Window* wind ,SDL_Renderer* gRend)
 {
-	
+	gRenderer=gRend;
+	window = wind;
+	SDL_Surface* loadedSurface = SDL_LoadBMP("testBG.bmp");
+	bg = SDL_CreateTextureFromSurface( gRenderer, loadedSurface );
+
+	SDL_FreeSurface( loadedSurface );
 
 	//The window renderer
 	gRenderer = NULL;
@@ -56,7 +61,7 @@ Graphic::~Graphic(void)
 {
 }
 
-void Graphic::displayBackground(char** map){
+void Graphic::displayBackground(Map map){
 	SDL_RenderClear( gRenderer );
 	SDL_Rect renderQuad = { 0, 0, CASE, CASE };
 
@@ -69,8 +74,14 @@ void Graphic::displayBackground(char** map){
 
 	for(int i = 0; i < SCREEN_WIDTH; i++){
 		for(int j = 0; j < SCREEN_HEIGHT; j++){
-			SDL_RenderCopy( gRenderer, gTexture, NULL, NULL );
+			renderQuad.x= i*CASE;
+			renderQuad.y = i*CASE;
+			SDL_RenderCopy( gRenderer, bg, &clip[map.getTab(i, j)], &renderQuad);
 		}
 	}
+}
+
+void Graphic::refresh(){
+	SDL_RenderPresent( gRenderer );
 }
 

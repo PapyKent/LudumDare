@@ -8,11 +8,12 @@ Context::Context(void)
 {
 	SDL_Window* window = NULL;
 
-	graphicEngine=new Graphic();
+	graphicEngine=new Graphic(window, gRenderer);
 
 	audioEngine=new Audio();
 	audioEngine->start(1);
 
+	map = new Map(gRenderer);
 
 }
 
@@ -56,6 +57,8 @@ bool Context::launchGame(){
 	SDL_Event e;
 
 	while(!quit){
+		graphicEngine->displayBackground(*map);
+		graphicEngine->refresh();
 		while(SDL_PollEvent(&e) !=0){
 			if( e.type == SDL_QUIT )
 			{

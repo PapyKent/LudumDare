@@ -10,7 +10,7 @@ private:
 public:
 	Hero(void);
 	Hero(string nameEntity, int entitySpeed, int orientation,
-		int hp, string entitySprite, int frame);
+		int hp, string entitySprite, int frame, SDL_Renderer* gRenderer);
 	~Hero(void);
 };
 

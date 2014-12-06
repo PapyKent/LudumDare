@@ -52,7 +52,7 @@ void Map::testAffiche(){
 	}
 }
 
-
+/*
 void Map::moveEntities(){
 
 		vector<Entity>::iterator cursor;
@@ -82,4 +82,4 @@ bool Map:: checkMove(int x, int y, Entity e){
 	else if(or==4){
 	}
 
-}
+}*/

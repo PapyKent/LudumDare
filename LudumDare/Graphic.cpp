@@ -52,16 +52,15 @@ Graphic::Graphic(SDL_Window* wind ,SDL_Renderer* gRend)
 
 Graphic::~Graphic(void)
 {
-		SDL_DestroyTexture(bg);
+	SDL_DestroyTexture(bg);
 }
 
 void Graphic::displayBackground(Map map){
-	SDL_RenderClear( gRenderer );
-	int test;
+
+
 	for(int i = 0; i < SCREEN_HEIGHT/32; i++){
 		for(int j = 0; j < SCREEN_WIDTH/32; j++){
 
-			test=map.getTab(i, j)-'0';
 			render(bg, i*32, j*32, &clip[map.getTab(i, j)-'0']);
 
 		}
@@ -72,20 +71,18 @@ void Graphic::refresh(){
 	SDL_RenderPresent( gRenderer );
 }
 
-void Graphic::SDL_RenderDrawRect(){
 
-	SDL_SetRenderDrawColor(gRenderer, 255,0,0,255);
-	SDL_RenderClear(gRenderer);
+void Graphic::displayEntities(vector<Entity> tableEntities){
 
-	SDL_Rect r;
-	r.x = 50;
-	r.y = 50;
-	r.w = 50;
-	r.h = 50;
-
-	SDL_RenderPresent(gRenderer);
-
-
+	SDL_Rect clap;
+	clap.x=0;
+	clap.y=0;
+	clap.w=32;
+	clap.h=32;
+	vector<Entity>::iterator cursor;
+	for(cursor= tableEntities.begin();cursor!=tableEntities.end();cursor++){
+		render(cursor->getSprite(), cursor->getPosX(), cursor->getPosY(), &clap);
+	}
 }
 
 void Graphic::render(SDL_Texture* mTexture, int x, int y, SDL_Rect* clip )
@@ -97,8 +94,10 @@ void Graphic::render(SDL_Texture* mTexture, int x, int y, SDL_Rect* clip )
 	{
 		renderQuad.w = clip->w;
 		renderQuad.h = clip->h;
+		SDL_RenderCopy( gRenderer, mTexture, clip, &renderQuad );
 	}
 
-	//Render to screen
-	SDL_RenderCopy( gRenderer, mTexture, clip, &renderQuad );
+	else{
+	SDL_RenderCopy( gRenderer, mTexture, NULL, &renderQuad );
+	}
 }

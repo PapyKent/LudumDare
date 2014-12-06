@@ -38,7 +38,7 @@ public:
 	int getWantToMove()	{return wantToMoveTo;}
 	int getPosX(){return posX;}
 	int getPosY(){return posY;}
+	SDL_Texture* getSprite(){return sprite;};
 
-	 
 };
 

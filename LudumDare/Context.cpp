@@ -2,6 +2,7 @@
 #include "Audio.h"
 #include "Graphic.h"
 #include "Physic.h"
+#include "Mob.h"
 
 
 Context::Context(void)
@@ -36,6 +37,10 @@ Context::Context(void)
 	audioEngine->start(1);
 
 	map = new Map(gRenderer);
+	Mob* test = new Mob("test", 0, 0, 0, "pacTEST.bmp", 0, gRenderer);
+	test->setPosX(50);
+	test->setPosY(50);
+	map->addEntity(test);
 
 }
 
@@ -70,7 +75,8 @@ bool Context::launchGame(){
 			{
 				quit = true;
 			}
-			graphicEngine->displayBackground(*map);
+	//		graphicEngine->displayBackground(*map);
+			graphicEngine->displayEntities(map->getTableEntities());
 			graphicEngine->refresh();
 		}
 	}

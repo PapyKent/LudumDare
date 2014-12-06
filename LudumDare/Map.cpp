@@ -56,6 +56,10 @@ void Map::testAffiche(){
 	}
 }
 
+vector<Entity> Map::getTableEntities(){
+	return tableEntities;
+}
+
 void Map::moveEntities(){
 
 	vector<Entity>::iterator cursor;

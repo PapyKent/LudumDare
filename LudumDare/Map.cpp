@@ -30,6 +30,7 @@ void Map::chargerTableau(string nomFichier){
 				fichier.get(tmp);
 				if(tmp>='0' && tmp<='9')
 				tableau[i][j]=tmp;
+				else j--;
 				//	fichier.get(tableau[i][j]);
 			}
 		}

@@ -19,14 +19,17 @@ Map::~Map(void)
 
 void Map::chargerTableau(string nomFichier){
 
-
+	char tmp;
 	ifstream fichier(nomFichier, ios::in);  // on ouvre le fichier en lecture
 
 	if(fichier)  // si l'ouverture a réussi
 	{     
 		for(int i=0;i<24;i++){
 			for(int j=0;j<32;j++){
-				cout<<fichier.get(tableau[i][j])<<endl;	
+
+				fichier.get(tmp);
+				if(tmp>='0' && tmp<='9')
+				tableau[i][j]=tmp;
 				//	fichier.get(tableau[i][j]);
 			}
 		}
@@ -100,3 +103,52 @@ bool Map:: checkMove(int x, int y, int or){
 	}
 	return false;
 }
+
+
+	
+	void Map::addEntity(Entity* c){
+		tableEntities.push_back(*c);
+
+	}
+
+	void Map::removeEntity(string nom){
+		
+		vector<Entity>::iterator cursor;
+		for(cursor= tableEntities.begin();cursor!=tableEntities.end();cursor++){
+			if(cursor->getNameEntity()==nom) tableEntities.erase(cursor);
+			
+		}
+
+	}
+	void Map::removeEntity(int index){
+
+		int tmp=0;
+		vector<Entity>::iterator cursor;
+		for(cursor= tableEntities.begin();cursor!=tableEntities.end();cursor++){
+			if(tmp==index) tableEntities.erase(cursor);
+			tmp++;
+		}
+	}
+
+	void Map::addItem(Item i){
+
+		tableItems.push_back(i);
+
+	}
+	void Map::removeItem(string nom){
+
+		vector<Item>::iterator cursor;
+		for(cursor= tableItems.begin();cursor!=tableItems.end();cursor++){
+			if(cursor->getnameItem()==nom) tableItems.erase(cursor);
+			
+		}
+	}
+	void Map::removeItem(int index){
+		int tmp=0;
+		vector<Item>::iterator cursor;
+		for(cursor= tableItems.begin();cursor!=tableItems.end();cursor++){
+			if(tmp==index) tableItems.erase(cursor);
+			tmp++;
+		}
+
+	}

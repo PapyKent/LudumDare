@@ -39,6 +39,6 @@ public:
 	int getPosX(){return posX;}
 	int getPosY(){return posY;}
 
-	 void move();
+	 
 };
 

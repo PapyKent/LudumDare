@@ -11,10 +11,12 @@ private:
 	int wantToMoveTo;
 	SDL_Texture* sprite;
 
+	int posX;
+	int posY;
 public:
 	Entity(void);
 	Entity(string nameEntity, int entitySpeed, int orientation,
-		int hp, string entitySprite, int frame);
+		int hp, string entitySprite, int frame,SDL_Renderer* gRenderer);
 
 	~Entity(void);
 
@@ -24,6 +26,8 @@ public:
 	void setHp(int h){hp=h;}
 	void setFrame(string f){frame=f;}
 	void setWantToMove(int w){wantToMoveTo=w;}
+	void setPosX(int p){posX=p;}
+	void setPosY(int p){posY=p;}
 
 
 	string getNameEntity()	{return nameEntity;}
@@ -32,5 +36,9 @@ public:
 	int getHp()	{return hp;}
 	string getFrame()	{return frame;}
 	int getWantToMove()	{return wantToMoveTo;}
+	int getPosX(){return posX;}
+	int getPosY(){return posY;}
+
+	virtual void move()=0;
 };
 

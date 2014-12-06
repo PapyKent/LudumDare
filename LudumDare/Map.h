@@ -7,7 +7,7 @@ class Item;
 class Map	
 {
 private:
-
+	SDL_Renderer* gRenderer;
 	char tableau [24][32];
 	
 	int level;
@@ -15,14 +15,14 @@ private:
 	vector <Item> tableItems;
 	
 public:
-	Map(void);
-	Map(int level );
+	Map(SDL_Renderer* gRenderer);
+	Map(SDL_Renderer* gRenderer,int level );
 	~Map(void);
 
-	Entity getEntity(int index);
-	Entity getEntity(string nom);
+	Entity* getEntity(int index);
+	Entity* getEntity(string nom);
 	
-	void addEntity(Entity c);
+	void addEntity(Entity* c);
 	void removeEntity(string nom);
 	void removeEntity(int index);
 
@@ -36,6 +36,11 @@ public:
 	void testAffiche();
 	void chargerTableau(string nomFichier);
 
+	void moveEntities();
+	bool checkMove(int x, int y,int or);
 
+
+
+	
 };
 

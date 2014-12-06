@@ -6,7 +6,7 @@ Entity::Entity(void)
 }
 
 Entity::Entity( string nameEntity,  int entitySpeed,  int orientation,
-		int  hp,string entitySprite, int frame){
+		int  hp,string entitySprite, int frame,SDL_Renderer* gRenderer){
 
 			this->nameEntity = nameEntity;
 			this->entitySpeed =  entitySpeed;

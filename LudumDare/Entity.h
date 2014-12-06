@@ -39,6 +39,6 @@ public:
 	int getPosX(){return posX;}
 	int getPosY(){return posY;}
 
-	virtual void move()=0;
+	 void move();
 };
 

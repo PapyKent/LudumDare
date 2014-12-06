@@ -1,7 +1,8 @@
 #pragma once
 #include "Header.h"
-class Entity;
-class Item;
+#include "Entity.h"
+#include "Item.h"
+
 
 
 class Map	

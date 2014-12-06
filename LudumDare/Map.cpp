@@ -65,16 +65,16 @@ void Map::moveEntities(){
 
 		if(checkMove(actualX,actualY,cursor->getEntityOrientation())){
 			if(cursor->getEntityOrientation()==1){ 
-				cursor->setPosY(actualY-cursor->getEntitySpeed);
+				cursor->setPosY(actualY-cursor->getEntitySpeed());
 			}
 			else if(cursor->getEntityOrientation()==2){
-				cursor->setPosX(actualX+cursor->getEntitySpeed);
+				cursor->setPosX(actualX+cursor->getEntitySpeed());
 			}
 			else if(cursor->getEntityOrientation()==3){
-				cursor->setPosX(actualY+cursor->getEntitySpeed);
+				cursor->setPosX(actualY+cursor->getEntitySpeed());
 			}
 			else if(cursor->getEntityOrientation()==4){
-				cursor->setPosY(actualX-cursor->getEntitySpeed);
+				cursor->setPosY(actualX-cursor->getEntitySpeed());
 			}
 			
 		}

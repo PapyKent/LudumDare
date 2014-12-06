@@ -21,5 +21,7 @@ public:
 	void displayEntities(vector<Entity>);
 	void refresh();
 
+	void render(SDL_Texture*, int x, int y, SDL_Rect* clip );
+
 };
 

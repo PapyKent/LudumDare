@@ -63,6 +63,11 @@ Graphic::~Graphic(void)
 
 void Graphic::displayBackground(Map map){
 	SDL_RenderClear( gRenderer );
+
+	SDL_RenderCopy(gRenderer, bg, NULL, NULL);
+	SDL_RenderPresent( gRenderer );
+
+	/*
 	SDL_Rect renderQuad = { 0, 0, CASE, CASE };
 
 	if( clip != NULL )
@@ -72,16 +77,31 @@ void Graphic::displayBackground(Map map){
 	}
 
 
-	for(int i = 0; i < SCREEN_WIDTH; i++){
-		for(int j = 0; j < SCREEN_HEIGHT; j++){
+	for(int i = 0; i < SCREEN_WIDTH/32; i++){
+		for(int j = 0; j < SCREEN_HEIGHT/32; j++){
 			renderQuad.x= i*CASE;
 			renderQuad.y = i*CASE;
 			SDL_RenderCopy( gRenderer, bg, &clip[map.getTab(i, j)], &renderQuad);
 		}
-	}
+	}*/
 }
 
 void Graphic::refresh(){
 	SDL_RenderPresent( gRenderer );
 }
 
+void Graphic::render(SDL_Texture* mTexture, int x, int y, SDL_Rect* clip )
+{
+    //Set rendering space and render to screen
+    SDL_Rect renderQuad = { x, y, CASE, CASE };
+
+    //Set clip rendering dimensions
+    if( clip != NULL )
+    {
+        renderQuad.w = clip->w;
+        renderQuad.h = clip->h;
+    }
+
+    //Render to screen
+    SDL_RenderCopy( gRenderer, mTexture, clip, &renderQuad );
+}

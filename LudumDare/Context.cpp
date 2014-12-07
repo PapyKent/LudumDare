@@ -5,6 +5,7 @@
 #include "Mob.h"
 #include "Hero.h"
 #include "Pacman.h"
+#include <time.h>
 
 
 Context::Context(void)
@@ -49,7 +50,7 @@ Context::Context(void)
 	map->addEntity(test2);
 
 	for(int i = 0; i < 6; i ++){
-		map->addEntity(new Mob("junior", 3, 1, 1, "junior.bmp", 0));
+		map->addEntity(new Mob("Pacman", 3, 1, 1, "junior.bmp", 0));
 	}
 
 }
@@ -64,7 +65,7 @@ Context::~Context(void)
 
 	SDL_DestroyRenderer(gRenderer);
 	//Destroy window
-
+	   SDL_DestroyWindow( window );
 
 	//Quit SDL subsystems
 	SDL_Quit();
@@ -76,7 +77,7 @@ Context::~Context(void)
 bool Context::launchGame(){
 	bool quit=false;
 	SDL_Event e;
-
+	srand(time(NULL));
 	int key=0;
 	bool haut=false;
 	bool bas=false;
@@ -167,7 +168,7 @@ bool Context::launchGame(){
 			map->setEntitySpeed(0, 4);
 		}
 		else map->setEntitySpeed(0, 0);
-		int tmp=(rand()%30)+1;
+		int tmp=(rand()%20)+1;
 		if(tmp==5)
 			map->activateAI();
 
@@ -192,14 +193,14 @@ bool Context::launchGame(){
 		graphicEngine->displayEntities(map->getTableEntities());
 
 		if(victory(map->getEntityX(0), map->getEntityY(0))){
-			quit=true;
+			return true;
 		}
 
 		graphicEngine->refresh();
 
 	}
 
-	return true;
+	return false;
 }
 
 bool Context::createRenderer()
@@ -246,14 +247,13 @@ bool Context::gameOver(){
 				//Select surfaces based on key press
 				switch( e.key.keysym.sym ) { 
 				case SDLK_SPACE:
-					launchGame();
-					break;
+					return true;
 				}
 			}
 		}
 
 
 	}
-			return true;
+			return false;
 }
 

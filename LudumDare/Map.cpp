@@ -241,119 +241,80 @@ void Map::activateAI(void){
 			heroY=(cursor->getPosY()+17)/CASE;
 		}
 
+
+
+		// IA PACMAN ************************************************************
 		else if(cursor->getNameEntity()=="Pacman"){
 			actualX=(cursor->getPosX()+17)/CASE;
 			actualY=(cursor->getPosY()+17)/CASE;
 
-			int tmp=0;
-			if( checkMove(actualX,actualY,1) )tmp++;
-			if( checkMove(actualX,actualY,2) )tmp++;
-			if( checkMove(actualX,actualY,3) )tmp++;
-			if( checkMove(actualX,actualY,4) )tmp++;
 
+			if(heroX-actualX<=0){
 
-
-
-			if (tmp>2){ //s'il est a un croisement
-
-				if(heroX-actualX>=heroY-actualY){
-
-					if(heroX-actualX<=0){
-
-						if(checkMove(actualX,actualY,1))
-							cursor->setEntityOrientation(1);
-						else{
-							int i= rand()%4+1;
-
-
-							while(!checkMove(actualX,actualY,i)){
-								i= rand()%4+1;
-
-							}
-							cursor->setEntityOrientation(i);
-						}
-					}
+				if(checkMove(actualX,actualY,1)){
+					cursor->setEntityOrientation(1);
+				}
+				else if(heroY-actualY<=0){
+					if(checkMove(actualX,actualY,4))
+						cursor->setEntityOrientation(4);
 					else{
-						
-						if(checkMove(actualX,actualY,3))
-							cursor->setEntityOrientation(3);
-						else{
-							int i= rand()%4+1;
+						int i= rand()%4+1;
 
 
-							while(!checkMove(actualX,actualY,i)){
-								i= rand()%4+1;
+						while(!checkMove(actualX,actualY,i)){
+							i= rand()%4+1;
 
-							}
-							cursor->setEntityOrientation(i);
 						}
+						cursor->setEntityOrientation(i);
 					}
-
-				}
-
-
-
-
-
-
-
-				else{
-					if(heroY-actualY<=0){
-						
-						if(checkMove(actualX,actualY,2))
-							cursor->setEntityOrientation(2);
-						else{
-							int i= rand()%4+1;
-
-
-							while(!checkMove(actualX,actualY,i)){
-								i= rand()%4+1;
-
-							}
-							cursor->setEntityOrientation(i);
-						}
-					}
+				} else{
+					if(checkMove(actualX,actualY,2))
+						cursor->setEntityOrientation(2);
 					else{
-						
-
-						if(checkMove(actualX,actualY,4))
-							cursor->setEntityOrientation(4);
-						else{
-							int i= rand()%4+1;
-
-
-							while(!checkMove(actualX,actualY,i)){
-								i= rand()%4+1;
-
-							}
-							cursor->setEntityOrientation(i);
+						int i= rand()%4+1;
+						while(!checkMove(actualX,actualY,i)){
+							i= rand()%4+1;
 						}
+						cursor->setEntityOrientation(i);
 					}
-
-
-				}
-
-
-
-			}
-
-			else{//si il est ds un couloir
-				if(checkMove(actualX,actualY,cursor->getEntityOrientation()))
-					cursor->setEntityOrientation(cursor->getEntityOrientation());
-				else{
-					int i= rand()%4+1;
-
-
-			while(!checkMove(actualX,actualY,i)){
-				i= rand()%4+1;
-
-			}
-			cursor->setEntityOrientation(i);
 				}
 			}
+			else{
+				if(checkMove(actualX,actualY,3)){
+					cursor->setEntityOrientation(3);
+				}
+				else if(heroY-actualY<=0){
+					if(checkMove(actualX,actualY,4))
+						cursor->setEntityOrientation(4);
+					else{
+						int i= rand()%4+1;
+
+
+						while(!checkMove(actualX,actualY,i)){
+							i= rand()%4+1;
+
+						}
+						cursor->setEntityOrientation(i);
+					}
+				} else{
+					if(checkMove(actualX,actualY,2))
+						cursor->setEntityOrientation(2);
+					else{
+						int i= rand()%4+1;
+						while(!checkMove(actualX,actualY,i)){
+							i= rand()%4+1;
+						}
+						cursor->setEntityOrientation(i);
+					}
+				}
+			}
+
+
 
 
 		}
+
+		// FIN IA PACMAN ************************************************************
 		else if(cursor->getNameEntity()=="junior"){
 
 			int i= rand()%4+1;

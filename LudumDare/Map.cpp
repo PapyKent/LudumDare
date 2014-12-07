@@ -220,82 +220,136 @@ int Map::getEntityY(int index){
 	}
 }
 
+
+
+
+
+
 void Map::activateAI(void){
 	int actualX;int  actualY;
 	vector<Entity>::iterator cursor;
+	int heroX;
+	int heroY;
+
+
+
+
+	for(cursor=tableEntities.begin();cursor!=tableEntities.end();cursor++){
+
+		if(cursor->getNameEntity()=="ghost"){
+			heroX=(cursor->getPosX()+17)/CASE;
+			heroY=(cursor->getPosY()+17)/CASE;
+		}
+
+		else if(cursor->getNameEntity()=="Pacman"){
+			actualX=(cursor->getPosX()+17)/CASE;
+			actualY=(cursor->getPosY()+17)/CASE;
+
+			int tmp=0;
+			if( checkMove(actualX,actualY,1) )tmp++;
+			if( checkMove(actualX,actualY,2) )tmp++;
+			if( checkMove(actualX,actualY,3) )tmp++;
+			if( checkMove(actualX,actualY,4) )tmp++;
+
+
+
+
+			if (tmp>2){ //s'il est a un croisement
+
+				if(heroX-actualX>=heroY-actualY){
+
+					if(heroX-actualX<=0){
+
+						if(checkMove(actualX,actualY,1))
+							cursor->setEntityOrientation(1);
+						else{
+							int i= rand()%4+1;
+
+
+							while(!checkMove(actualX,actualY,i)){
+								i= rand()%4+1;
+
+							}
+							cursor->setEntityOrientation(i);
+						}
+					}
+					else{
+						
+						if(checkMove(actualX,actualY,3))
+							cursor->setEntityOrientation(3);
+						else{
+							int i= rand()%4+1;
+
+
+							while(!checkMove(actualX,actualY,i)){
+								i= rand()%4+1;
+
+							}
+							cursor->setEntityOrientation(i);
+						}
+					}
+
+				}
 
 
 
 
 
 
-	for(cursor=tableEntities.begin()+1;cursor!=tableEntities.end();cursor++){
-		actualX=cursor->getPosX();
-		actualY=cursor->getPosY();
 
-		actualX=((actualX+16)/CASE);
-		actualY=((actualY+16)/CASE);	
+				else{
+					if(heroY-actualY<=0){
+						
+						if(checkMove(actualX,actualY,2))
+							cursor->setEntityOrientation(2);
+						else{
+							int i= rand()%4+1;
 
-		if(cursor->getNameEntity()=="Pacman"){
+
+							while(!checkMove(actualX,actualY,i)){
+								i= rand()%4+1;
+
+							}
+							cursor->setEntityOrientation(i);
+						}
+					}
+					else{
+						
+
+						if(checkMove(actualX,actualY,4))
+							cursor->setEntityOrientation(4);
+						else{
+							int i= rand()%4+1;
+
+
+							while(!checkMove(actualX,actualY,i)){
+								i= rand()%4+1;
+
+							}
+							cursor->setEntityOrientation(i);
+						}
+					}
+
+
+				}
 
 
 
-			int heroX=(tableEntities.begin()->getPosX()+16)/CASE;
-			int heroY=(tableEntities.begin()->getPosY()+16)/CASE;
-			int diffX=fabs((double)heroX-actualX);
-			int diffY=fabs((double)heroY-actualY);
-
-			if(diffX<=diffY ){
-
-				if(heroX-actualX<=0 && checkMove(actualX,actualY,1)){cursor->setEntityOrientation(1);}
-
-				else if (heroX-actualX<=0 && checkMove(actualX,actualY,2)){cursor->setEntityOrientation(2);} 
-
-				else if (heroX-actualX<=0 && checkMove(actualX,actualY,4)){cursor->setEntityOrientation(4);}
-
-				else if(heroX-actualX>=0 && checkMove(actualX,actualY,3)){cursor->setEntityOrientation(3);}
-
-				else if (heroX-actualX>=0 && checkMove(actualX,actualY,4)){cursor->setEntityOrientation(4);}
-
-				else if (heroX-actualX>=0 && checkMove(actualX,actualY,2)){cursor->setEntityOrientation(2);}
-
-				else if (checkMove(actualX,actualY,1)) {cursor->setEntityOrientation(1);}
-
-				else if (checkMove(actualX,actualY,3)) {cursor->setEntityOrientation(3);}
-
-				else if (checkMove(actualX,actualY,2)) {cursor->setEntityOrientation(2);}
-
-				else if (checkMove(actualX,actualY,4)) {cursor->setEntityOrientation(4);}
-
-				//sinan c'est qu'il y a un gros probleme et qu'il se casse de l'écran, ce qui ne rentre pas dans le thème, du coup on gère pas et FATAL ERROR...
 			}
 
-
-			else if(diffX>diffY ){
-
-				if(heroY-actualY<=0 && checkMove(actualX,actualY,4)){cursor->setEntityOrientation(4);}
-
-				else if (heroY-actualY<=0 && checkMove(actualX,actualY,1)){cursor->setEntityOrientation(1);} 
-
-
-				else if(heroY-actualY<=0 && checkMove(actualX,actualY,3)){cursor->setEntityOrientation(3);}
+			else{//si il est ds un couloir
+				if(checkMove(actualX,actualY,cursor->getEntityOrientation()))
+					cursor->setEntityOrientation(cursor->getEntityOrientation());
+				else{
+					int i= rand()%4+1;
 
 
-				else if (heroY-actualY>=0 && checkMove(actualX,actualY,2)){cursor->setEntityOrientation(2);}
+			while(!checkMove(actualX,actualY,i)){
+				i= rand()%4+1;
 
-				else if (heroY-actualY>=0 && checkMove(actualX,actualY,1)){cursor->setEntityOrientation(1);}
-
-				else if (heroY-actualY>=0 && checkMove(actualX,actualY,3)){cursor->setEntityOrientation(3);}
-
-				else if (checkMove(actualX,actualY,1)) {cursor->setEntityOrientation(1);}
-
-				else if (checkMove(actualX,actualY,2)) {cursor->setEntityOrientation(2);}
-
-				else if (checkMove(actualX,actualY,3)) {cursor->setEntityOrientation(3);}
-
-				else if (checkMove(actualX,actualY,4)) {cursor->setEntityOrientation(4);}
-
-				//sinan c'est qu'il y a un gros probleme et qu'il se casse de l'écran, ce qui ne rentre pas dans le thème, du coup on gère pas et FATAL ERROR...
+			}
+			cursor->setEntityOrientation(i);
+				}
 			}
 
 
@@ -315,6 +369,7 @@ void Map::activateAI(void){
 		}
 	}
 }
+
 
 
 bool Map::heroDead(){

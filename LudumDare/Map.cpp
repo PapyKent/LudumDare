@@ -229,7 +229,7 @@ void Map::activateAI(void){
 
 
 
-	for(cursor=tableEntities.begin();cursor!=tableEntities.end();cursor++){
+	for(cursor=tableEntities.begin()+1;cursor!=tableEntities.end();cursor++){
 		actualX=cursor->getPosX();
 		actualY=cursor->getPosY();
 
@@ -242,67 +242,77 @@ void Map::activateAI(void){
 
 			int heroX=(tableEntities.begin()->getPosX()+16)/CASE;
 			int heroY=(tableEntities.begin()->getPosY()+16)/CASE;
+			int diffX=fabs((double)heroX-actualX);
+			int diffY=fabs((double)heroY-actualY);
 
-			if(fabs((double)heroX-actualX)<=fabs((double)heroY-actualY)){
+			if(diffX<=diffY ){
 
-				if(heroX-actualX<=0 && checkMove(actualX,actualY,4)){}//plus proche à gauche et peut aller à gauche
+				if(heroX-actualX<=0 && checkMove(actualX,actualY,1)){cursor->setEntityOrientation(1);}
 
-				else if (heroX-actualX<=0 && checkMove(actualX,actualY,2)){}  //plus proche à gauche et peut aller à droite
+				else if (heroX-actualX<=0 && checkMove(actualX,actualY,2)){cursor->setEntityOrientation(2);} 
 
-				else if(heroX-actualX>=0 && checkMove(actualX,actualY,2)){}//plus proche à droite et peut aller à droite
+				else if (heroX-actualX<=0 && checkMove(actualX,actualY,4)){cursor->setEntityOrientation(4);}
 
-				else if (heroX-actualX>=0 && checkMove(actualX,actualY,4)){}//plus proche à droite et peut aller à gauche
+				else if(heroX-actualX>=0 && checkMove(actualX,actualY,3)){cursor->setEntityOrientation(3);}
 
-				else if (checkMove(actualX,actualY,1)) {}//sinan il charge
+				else if (heroX-actualX>=0 && checkMove(actualX,actualY,4)){cursor->setEntityOrientation(4);}
 
-				else if (checkMove(actualX,actualY,3)) {}//sinan il rentre a sa maison
+				else if (heroX-actualX>=0 && checkMove(actualX,actualY,2)){cursor->setEntityOrientation(2);}
 
-				else if (checkMove(actualX,actualY,2)) {}//sinan il part à droite
+				else if (checkMove(actualX,actualY,1)) {cursor->setEntityOrientation(1);}
 
-				else if (checkMove(actualX,actualY,4)) {}//sinan il part à gauche
+				else if (checkMove(actualX,actualY,3)) {cursor->setEntityOrientation(3);}
+
+				else if (checkMove(actualX,actualY,2)) {cursor->setEntityOrientation(2);}
+
+				else if (checkMove(actualX,actualY,4)) {cursor->setEntityOrientation(4);}
+
+				//sinan c'est qu'il y a un gros probleme et qu'il se casse de l'écran, ce qui ne rentre pas dans le thème, du coup on gère pas et FATAL ERROR...
+			}
+
+
+			else if(diffX>diffY ){
+
+				if(heroY-actualY<=0 && checkMove(actualX,actualY,4)){cursor->setEntityOrientation(4);}
+
+				else if (heroY-actualY<=0 && checkMove(actualX,actualY,1)){cursor->setEntityOrientation(1);} 
+
+
+				else if(heroY-actualY<=0 && checkMove(actualX,actualY,3)){cursor->setEntityOrientation(3);}
+
+
+				else if (heroY-actualY>=0 && checkMove(actualX,actualY,2)){cursor->setEntityOrientation(2);}
+
+				else if (heroY-actualY>=0 && checkMove(actualX,actualY,1)){cursor->setEntityOrientation(1);}
+
+				else if (heroY-actualY>=0 && checkMove(actualX,actualY,3)){cursor->setEntityOrientation(3);}
+
+				else if (checkMove(actualX,actualY,1)) {cursor->setEntityOrientation(1);}
+
+				else if (checkMove(actualX,actualY,2)) {cursor->setEntityOrientation(2);}
+
+				else if (checkMove(actualX,actualY,3)) {cursor->setEntityOrientation(3);}
+
+				else if (checkMove(actualX,actualY,4)) {cursor->setEntityOrientation(4);}
 
 				//sinan c'est qu'il y a un gros probleme et qu'il se casse de l'écran, ce qui ne rentre pas dans le thème, du coup on gère pas et FATAL ERROR...
 			}
 
 
-			else if(fabs((double)heroX-actualX)>fabs((double)heroY-actualY)){
-
-				if(heroX-actualY<=0 && checkMove(actualX,actualY,3)){}//plus proche en bas et peut aller en bas
-
-				else if (heroX-actualY<=0 && checkMove(actualX,actualY,4)){} //plus proche en bas et peut aller a gauche
-
-
-				else if(heroX-actualY<=0 && checkMove(actualX,actualY,2)){}//plus proche en bas et peut aller a droite
-
-
-				else if (heroX-actualY>=0 && checkMove(actualX,actualY,1)){}//plus proche en haut et peut aller en haut
-
-				else if (heroX-actualY>=0 && checkMove(actualX,actualY,2)){}//plus proche en haut et peut aller à droite
-
-				else if (heroX-actualY>=0 && checkMove(actualX,actualY,4)){}//plus proche en haut et peut aller à gauche
-
-				else if (checkMove(actualX,actualY,4)) {}//sinan il charge
-
-				else if (checkMove(actualX,actualY,4)) {}//sinan il rentre a sa maison
-
-				else if (checkMove(actualX,actualY,2)) {}//sinan il part à droite
-
-				else if (checkMove(actualX,actualY,4)) {}//sinan il part à gauche
-
-				//sinan c'est qu'il y a un gros probleme et qu'il se casse de l'écran, ce qui ne rentre pas dans le thème, du coup on gère pas et FATAL ERROR...
-			}
 		}
 		else if(cursor->getNameEntity()=="junior"){
 
 			int i= rand()%4+1;
 
-			//pattern test mobs
-			if(checkMove(actualX,actualY,i)){
-				cursor->setEntityOrientation(i);
+
+			while(!checkMove(actualX,actualY,i)){
+				i= rand()%4+1;
+
 			}
+			cursor->setEntityOrientation(i);
+		
 
 		}
-
 	}
 }
 

@@ -3,6 +3,8 @@
 #include "Graphic.h"
 #include "Physic.h"
 #include "Mob.h"
+#include "Hero.h"
+#include "Pacman.h"
 
 
 Context::Context(void)
@@ -37,17 +39,28 @@ Context::Context(void)
 	audioEngine=new Audio();
 	//audioEngine->start(1);
 
-	map = new Map(gRenderer);map->testAffiche();
-	Mob* test = new Mob("ghost", 0, 1, 0, "ghost1.bmp", 0);
+	map=new Map(gRenderer);
+	Hero* test = new Hero("ghost", 0, 1, 0, "ghost1.bmp", 0);
 	test->setPosX(0);
-	test->setPosY(60);
+	test->setPosY(0);
 	map->addEntity(test);
 
-	Mob* test2 = new Mob("junior", 4, 1, 0, "pacTEST.bmp", 0);
-	test2->setPosX(64);
+	
+	Mob* test3 = new Mob("junior", 3, 1, 0, "pacTEST.bmp", 0);
+	test3->setPosX(9*CASE);
+	test3->setPosY(6*CASE);
+	map->addEntity(test3);
+
+	
+	Mob* test4 = new Mob("junior", 3, 1, 0, "pacTEST.bmp", 0);
+	test4->setPosX(20*CASE);
+	test4->setPosY(6*CASE);
+	map->addEntity(test4);
+
+	Pacman* test2 = new Pacman("Pacman", 4, 1, 0, "pacTEST.bmp", 0);
+	test2->setPosX(13*CASE);
 	test2->setPosY(0);
 	map->addEntity(test2);
-
 
 }
 
@@ -92,7 +105,7 @@ bool Context::launchGame(){
 			//User presses a key
 			else if( e.type == SDL_KEYDOWN )
 			{
-				map->activateAI();
+				
 				//Select surfaces based on key press
 				switch( e.key.keysym.sym ) { 
 				case SDLK_UP:  {
@@ -154,6 +167,10 @@ bool Context::launchGame(){
 			map->setEntitySpeed(0, 4);
 		}
 		else map->setEntitySpeed(0, 0);
+		int tmp=(rand()%30)+1;
+		if(tmp==5)
+			map->activateAI();
+
 
 		map->moveEntities();
 

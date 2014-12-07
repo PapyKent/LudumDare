@@ -57,5 +57,7 @@ public:
 	void respawn();
 	void respawn(int);
 	void bamHero(bool);
+
+	void activateHeroAttack();
 };
 

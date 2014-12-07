@@ -14,10 +14,10 @@ Graphic::Graphic(SDL_Window* wind ,SDL_Renderer* gRend)
 
 	//Clip
 	for(int i = 0; i < 16; i++){
-	clip[i].x = CASE*i;
-	clip[i].y = 0;
-	clip[i].w = CASE;
-	clip[i].h = CASE;
+		clip[i].x = CASE*i;
+		clip[i].y = 0;
+		clip[i].w = CASE;
+		clip[i].h = CASE;
 	}
 
 
@@ -73,24 +73,26 @@ void Graphic::displayEntities(vector<Entity> tableEntities){
 	clap.h=32;
 	vector<Entity>::iterator cursor;
 	for(cursor= tableEntities.begin();cursor!=tableEntities.end();cursor++){
-		loadedSurface = SDL_LoadBMP(cursor->getLoader().c_str());
-		SDL_SetColorKey( loadedSurface, SDL_TRUE, SDL_MapRGB( loadedSurface->format, 0, 255, 255 ) );
-		tex=SDL_CreateTextureFromSurface( gRenderer, loadedSurface );
-		render(tex, cursor->getPosX(), cursor->getPosY(), &clap);
-		SDL_FreeSurface( loadedSurface );
+		if(!cursor->isDead()){
+			loadedSurface = SDL_LoadBMP(cursor->getLoader().c_str());
+			SDL_SetColorKey( loadedSurface, SDL_TRUE, SDL_MapRGB( loadedSurface->format, 0, 255, 255 ) );
+			tex=SDL_CreateTextureFromSurface( gRenderer, loadedSurface );
+			render(tex, cursor->getPosX(), cursor->getPosY(), &clap);
+			SDL_FreeSurface( loadedSurface );
+		}
 	}
 }
 
 void Graphic::render(SDL_Texture* mTexture, int x, int y, SDL_Rect* clip)
 {
-	
-	
+
+
 	SDL_Rect renderQuad = { y, x, CASE, CASE };
 	//Set rendering space and render to screen
 
-	
-	
-	
+
+
+
 	if( clip != NULL )
 	{
 		renderQuad.w = clip->w;

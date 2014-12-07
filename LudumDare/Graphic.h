@@ -22,5 +22,6 @@ public:
 	void display(SDL_Texture* mTexture, int x, int y, int frame);
 	void render(SDL_Texture*, int x, int y, SDL_Rect* clip );
 	void SDL_RenderDrawRect();
+	void displayAttack(int orientation);
 };
 

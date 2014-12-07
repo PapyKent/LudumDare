@@ -60,14 +60,14 @@ Context::Context(void)
 Context::~Context(void)
 {
 
-
+	SDL_DestroyWindow( window );
 	delete(graphicEngine);
 	delete(audioEngine);
 	delete(map);
 
 	SDL_DestroyRenderer(gRenderer);
 	//Destroy window
-	SDL_DestroyWindow( window );
+
 
 	//Quit SDL subsystems
 	SDL_Quit();
@@ -85,6 +85,8 @@ bool Context::launchGame(){
 	bool bas=false;
 	bool droite=false;
 	bool gauche=false;
+
+	bool attack=false;
 
 	while(!quit){
 
@@ -141,13 +143,19 @@ bool Context::launchGame(){
 				default: 
 					break;
 				} 
+				if(e.key.keysym.sym ==SDLK_SPACE){
+					attack = true;
+				}
 			}
 
 
 
 
 		}
-
+		if(attack){
+			map->activateHeroAttack();
+			attack=false;
+		}
 
 		if(droite)key=2;
 		else if(gauche)key=4;
@@ -161,8 +169,8 @@ bool Context::launchGame(){
 		}
 		else map->setEntitySpeed(0, 0);
 		int tmp=(rand()%30)+1;
-		if(tmp==5)
-			map->activateAI();
+//		if(tmp==5)
+//			map->activateAI();
 
 
 		map->moveEntities();
@@ -173,10 +181,6 @@ bool Context::launchGame(){
 			}
 		}
 
-		graphicEngine->displayBackground(*map);
-		graphicEngine->displayEntities(map->getTableEntities());
-		graphicEngine->refresh();
-
 		if(map->heroDead()){
 
 			map->respawn();
@@ -185,6 +189,9 @@ bool Context::launchGame(){
 			droite=false;
 			gauche=false;
 		}
+		graphicEngine->displayBackground(*map);
+		graphicEngine->displayEntities(map->getTableEntities());
+		graphicEngine->refresh();
 
 	}
 

@@ -339,10 +339,6 @@ bool Map::bam(int i){
 		}
 		tmp++;
 	}
-
-
-
-
 	return true;
 }
 
@@ -350,6 +346,71 @@ void Map::bamHero(bool b){
 	vector<Entity>::iterator cursor;
 	for(cursor=tableEntities.begin();cursor!=tableEntities.end();cursor++){
 		if(cursor->getNameEntity()=="ghost")cursor->takeDMG(1,b);
+	}
+}
+
+
+void Map::activateHeroAttack(){
+	int orientation = tableEntities[0].getEntityOrientation();
+	vector<Entity>::iterator cursor;
+	int rangeX=0;
+	int rangeY=0;
+
+	int casedegatX;
+	int casedegatY;
+
+	int posXen;
+	int posYen;
+	int posXhero=tableEntities[0].getPosX();
+	int posYhero=tableEntities[0].getPosY();
+
+	switch(orientation){
+	case 1:
+		rangeX+=-70;
+		break;
+	case 2:
+		rangeY+=70+CASE;
+		break;
+	case 3:
+		rangeX+=70+CASE;
+		break;
+	case 4:
+		rangeY+=-70;
+		break;
+	}
+	casedegatX =posXhero+rangeX;
+	casedegatY =posYhero+rangeY;
+
+
+	for(int i = 1; i < tableEntities.size(); i++){	
+
+		posXen=tableEntities[i].getPosX();
+		posYen = tableEntities[i].getPosY();
+
+		switch(orientation){
+		case 1:
+			if(posXen>=casedegatX && posXen<=posXhero && posYen>=posYhero && posYen<=posYhero+32){
+				tableEntities[i].takeDMG(1, false);
+			}
+			break;
+		case 2:
+			if(posYen<=casedegatY && posYen>=posYhero && posXen>=posXhero && posXen<=posXhero+32){
+				tableEntities[i].takeDMG(1, false);
+			}
+			break;
+		case 3:
+			if(posXen<=casedegatX && posXen>=posXhero && posYen>=posYhero && posYen<=posYhero+32){
+				tableEntities[i].takeDMG(1, false);
+			}
+			break;
+		case 4:
+			if(posYen>=casedegatY && posYen<=posYhero && posXen>=posXhero && posXen<=posXhero+32){
+				tableEntities[i].takeDMG(1, false);
+			}
+			break;
+		}
+
+
 	}
 }
 
@@ -429,7 +490,7 @@ void Map::respawn(){
 		else if(tmp==1){
 			cursor->setPosX(9*CASE);
 			cursor->setPosY(6*CASE);
-			cursor->setHp(1);
+			cursor->setHp(50);
 		}
 
 		else if(tmp==2){
@@ -442,37 +503,37 @@ void Map::respawn(){
 		else if(tmp==3){
 			cursor->setPosX(13*CASE);
 			cursor->setPosY(0);
-			cursor->setHp(50);
+			cursor->setHp(1);
 
 		}
 		else if(tmp==4){
 			cursor->setPosX(19*CASE);
 			cursor->setPosY(30*CASE);
-			cursor->setHp(50);
+			cursor->setHp(1);
 
 		}
 		else if(tmp==5){
 			cursor->setPosX(10*CASE);
 			cursor->setPosY(7);
-			cursor->setHp(50);
+			cursor->setHp(1);
 
 		}
 		else if(tmp==6){
 			cursor->setPosX(16*CASE);
 			cursor->setPosY(25*CASE);
-			cursor->setHp(50);
+			cursor->setHp(1);
 
 		}
 		else if(tmp==7){
 			cursor->setPosX(4*CASE);
 			cursor->setPosY(26*CASE);
-			cursor->setHp(50);
+			cursor->setHp(1);
 
 		}
 		else if(tmp==8){
 			cursor->setPosX(4*CASE);
 			cursor->setPosY(17*CASE);
-			cursor->setHp(50);
+			cursor->setHp(1);
 
 		}
 		tmp++;

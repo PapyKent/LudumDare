@@ -34,7 +34,7 @@ Context::Context(void)
 	graphicEngine=new Graphic(window, gRenderer);
 
 	audioEngine=new Audio();
-	audioEngine->start(1);
+	//audioEngine->start(1);
 
 	map = new Map(gRenderer);map->testAffiche();
 	Mob* test = new Mob("ghost", 0, 1, 0, "pacTEST.bmp", 0);
@@ -71,10 +71,15 @@ bool Context::launchGame(){
 	bool quit=false;
 	SDL_Event e;
 
-
+	int key=0;
+	bool haut=false;
+	bool bas=false;
+	bool droite=false;
+	bool gauche=false;
 
 	while(!quit){
-		map->setEntitySpeed(0, 0);
+
+
 
 		while(SDL_PollEvent(&e) !=0){
 			if( e.type == SDL_QUIT )
@@ -88,34 +93,65 @@ bool Context::launchGame(){
 				//Select surfaces based on key press
 				switch( e.key.keysym.sym ) { 
 				case SDLK_UP:  {
-					map->setEntityOrientation(0, 1);
-					map->setEntitySpeed(0, 10); //valeur test
+
+					haut=true;
+					bas=false;
+					droite=false;
+					gauche=false;
+
 							   }
 							   break; 
 				case SDLK_DOWN: {
-					map->setEntityOrientation(0, 3);
-					map->setEntitySpeed(0, 10); //valeur test			
+
+					haut=false;
+					bas=true;
+					droite=false;
+					gauche=false;
+
 								}
 								break; 
 				case SDLK_LEFT: {
-					map->setEntityOrientation(0, 4);
-					map->setEntitySpeed(0, 10); //valeur test			
+
+					haut=false;
+					bas=false;
+					droite=false;
+					gauche=true;
+
 								}
 								break;
 				case SDLK_RIGHT: {
-					map->setEntityOrientation(0, 2);
-					map->setEntitySpeed(0, 10); //valeur test			 
+
+					haut=false;
+					bas=false;
+					droite=true;
+					gauche=false;
+
 								 }
 								 break; 
 
-				default: map->setEntitySpeed(0,0);
+				default: 
 					break;
 				} 
 			}
 
-			 
+
+
+
 		}
-		
+
+
+		if(droite)key=2;
+		else if(gauche)key=4;
+		else if (haut)key=1;
+		else if(bas)key=3;
+		else key=0;
+
+		if(key!=0){
+			map->setEntityOrientation(0, key);
+			map->setEntitySpeed(0, 4);
+		}
+		else map->setEntitySpeed(0, 0);
+
 		map->moveEntities();
 
 

@@ -37,10 +37,14 @@ Context::Context(void)
 	audioEngine->start(1);
 
 	map = new Map(gRenderer);
-	Mob* test = new Mob("test", 0, 1, 0, "pacTEST.bmp", 0, gRenderer);
-	test->setPosX(50);
-	test->setPosY(50);
+	Mob* test = new Mob("test", 0, 1, 0, "pacTEST.bmp", 0);
+	test->setPosX(0);
+	test->setPosY(0);
 	map->addEntity(test);
+
+		Mob* test2 = new Mob("test2", 0, 1, 0, "pacTEST.bmp", 0);
+	test->setPosX(64);
+	test->setPosY(0);
 	map->addEntity(test);
 
 
@@ -111,7 +115,7 @@ bool Context::launchGame(){
 			map->moveEntities();
 
 
-					graphicEngine->displayBackground(*map);
+			graphicEngine->displayBackground(*map);
 			graphicEngine->displayEntities(map->getTableEntities());
 			graphicEngine->refresh();
 		}

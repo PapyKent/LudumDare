@@ -7,16 +7,16 @@ private:
 	int entitySpeed;
 	int entityOrientation;
 	int hp;
-	string frame;
+	int frame;
 	int wantToMoveTo;
-	SDL_Texture* sprite;
+	string loader;
 
 	int posX;
 	int posY;
 public:
 	Entity(void);
 	Entity(string nameEntity, int entitySpeed, int orientation,
-		int hp, string entitySprite, int frame,SDL_Renderer* gRenderer);
+		int hp, string entitySprite, int frame);
 
 	~Entity(void);
 
@@ -24,21 +24,21 @@ public:
 	void setEntitySpeed(int e){entitySpeed=e;}
 	void setEntityOrientation(int e){entityOrientation=e;}
 	void setHp(int h){hp=h;}
-	void setFrame(string f){frame=f;}
+	void setFrame(int f){frame=f;}
 	void setWantToMove(int w){wantToMoveTo=w;}
 	void setPosX(int p){posX=p;}
 	void setPosY(int p){posY=p;}
 
 
 	string getNameEntity()	{return nameEntity;}
+	string getLoader(){return loader;}
 	int getEntitySpeed()	{return entitySpeed;}
 	int getEntityOrientation()	{return entityOrientation;}
 	int getHp()	{return hp;}
-	string getFrame()	{return frame;}
+	int getFrame()	{return frame;}
 	int getWantToMove()	{return wantToMoveTo;}
 	int getPosX(){return posX;}
 	int getPosY(){return posY;}
-	SDL_Texture* getSprite(){return sprite;};
 
 };
 

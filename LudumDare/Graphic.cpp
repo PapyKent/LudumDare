@@ -56,26 +56,13 @@ Graphic::~Graphic(void)
 	SDL_DestroyTexture(bg);
 }
 
-void Graphic::display(Map map){
-
-	for(int i = 0; i < SCREEN_HEIGHT/32; i++){
-		for(int j = 0; j < SCREEN_WIDTH/32; j++){
-			if(map.getTab(i, j)-'0' !=0){
-				render(bg, i*32, j*32, &clip[map.getTab(i, j)-'0']);
-			}
-
-		}
-	}
-	SDL_Rect clap;
+void Graphic::display(SDL_Texture* mTexture, int x, int y, int frame){
+		SDL_Rect clap;
 	clap.x=0;
 	clap.y=0;
 	clap.w=32;
 	clap.h=32;
-	//	Entity* test = new Mob("test", 0, 0, 0, "pacTEST.bmp", 0, gRenderer);
-	Entity* test =map.findEntity(0);
-	test->setPosX(50);
-	test->setPosY(50);
-	render(test->getSprite(), test->getPosX(),test->getPosY(), &clap);
+	render(mTexture, x, y, &clap);
 
 }
 
@@ -99,17 +86,21 @@ void Graphic::refresh(){
 
 
 void Graphic::displayEntities(vector<Entity> tableEntities){
-
+	SDL_Surface* loadedSurface=NULL;
+			SDL_Texture* tex=NULL;
 	SDL_Rect clap;
 	clap.x=0;
 	clap.y=0;
 	clap.w=32;
 	clap.h=32;
-	render(tableEntities[0].getSprite(), 20,20, &clap);
-	/*vector<Entity>::iterator cursor;
+	vector<Entity>::iterator cursor;
 	for(cursor= tableEntities.begin();cursor!=tableEntities.end();cursor++){
-		render(cursor->getSprite(), cursor->getPosX(), cursor->getPosY(), &clap);
-	}*/
+		loadedSurface = SDL_LoadBMP(cursor->getLoader().c_str());
+		SDL_SetColorKey( loadedSurface, SDL_TRUE, SDL_MapRGB( loadedSurface->format, 0, 255, 255 ) );
+		tex=SDL_CreateTextureFromSurface( gRenderer, loadedSurface );
+		render(tex, cursor->getPosX(), cursor->getPosY(), &clap);
+			SDL_FreeSurface( loadedSurface );
+	}
 }
 
 void Graphic::render(SDL_Texture* mTexture, int x, int y, SDL_Rect* clip )

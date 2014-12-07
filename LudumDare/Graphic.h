@@ -16,11 +16,10 @@ public:
 	Graphic(SDL_Window* window, SDL_Renderer* gRenderer);
 	~Graphic(void);
 
-	void display();
 	void displayBackground(Map map);
 	void displayEntities(vector<Entity>);
 	void refresh();
-
+	void display(SDL_Texture* mTexture, int x, int y, int frame);
 	void render(SDL_Texture*, int x, int y, SDL_Rect* clip );
 	void SDL_RenderDrawRect();
 };

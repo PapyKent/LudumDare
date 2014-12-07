@@ -9,7 +9,7 @@ class Graphic
 {
 	SDL_Renderer* gRenderer;
 	SDL_Window* window;
-	SDL_Rect clip[ 12 ];
+	SDL_Rect clip[ 16 ];
 	SDL_Texture *bg;
 
 public:

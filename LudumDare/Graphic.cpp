@@ -13,7 +13,7 @@ Graphic::Graphic(SDL_Window* wind ,SDL_Renderer* gRend)
 
 
 	//Clip
-	for(int i = 0; i < 12; i++){
+	for(int i = 0; i < 16; i++){
 	clip[i].x = CASE*i;
 	clip[i].y = 0;
 	clip[i].w = CASE;
@@ -40,12 +40,17 @@ void Graphic::display(SDL_Texture* mTexture, int x, int y, int frame){
 }
 
 void Graphic::displayBackground(Map map){
-
+	int index=0;
 
 	for(int i = 0; i < SCREEN_HEIGHT/32; i++){
 		for(int j = 0; j < SCREEN_WIDTH/32; j++){
+			index= map.getTab(i, j);
+			if(index<=57 && index>=48){
+				render(bg, i*32, j*32, &clip[index-'0']);
+			}else{
+				render(bg, i*32, j*32, &clip[index-55]);
+			}
 
-			render(bg, i*32, j*32, &clip[map.getTab(i, j)-'0']);
 
 
 		}

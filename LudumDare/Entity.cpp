@@ -19,3 +19,8 @@ Entity::Entity( string nameEntity,  int entitySpeed,  int orientation,
 Entity::~Entity(void){
 
 }
+
+	bool Entity::takeDMG(int dmg){
+
+		return true;
+	}

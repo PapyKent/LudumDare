@@ -31,7 +31,7 @@ void Map::chargerTableau(string nomFichier){
 				fichier.get(tmp);
 				if(j<32)
 					tableau[i][j]=tmp;
-				
+
 				//	fichier.get(tableau[i][j]);
 			}
 		}
@@ -107,7 +107,7 @@ void Map::moveEntities(){
 
 			if(cursor->getEntityOrientation()==1){ 
 				cursor->setPosX(actualX*CASE);
-				
+
 			}
 			else if(cursor->getEntityOrientation()==2){
 				cursor->setPosY(actualY*CASE);
@@ -132,19 +132,19 @@ bool Map:: checkMove(int x, int y, int or){
 		if(y<31)
 			if(tableau[x][y+1]=='0')return true;
 			else return false;
-		
+
 	}
 	else if(or==3){
 		if(x<24)
 			if(tableau[x+1][y]=='0')return true;
 			else return false;
-		
+
 	}
 	else if(or==4){
 		if(y>0)
 			if(tableau[x][y-1]=='0')return true;
 			else return false;
-		
+
 	}
 	return false;
 }
@@ -207,6 +207,17 @@ void Map::removeItem(int index){
 		tmp++;
 	}
 
+}
+
+int Map::getEntityX(int index){
+	if(index< tableEntities.size()){
+		return tableEntities[index].getPosX();
+	}
+}
+int Map::getEntityY(int index){
+	if(index< tableEntities.size()){
+		return tableEntities[index].getPosY();
+	}
 }
 
 void Map::activateAI(void){
@@ -282,14 +293,14 @@ void Map::activateAI(void){
 			}
 		}
 		else if(cursor->getNameEntity()=="junior"){
-			
+
 			int i= rand()%4+1;
 
 			//pattern test mobs
 			if(checkMove(actualX,actualY,i)){
 				cursor->setEntityOrientation(i);
 			}
-			
+
 		}
 
 	}

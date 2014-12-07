@@ -30,6 +30,7 @@ Context::Context(void)
 
 	createRenderer();
 
+	physicEngine=new Physic();
 
 	graphicEngine=new Graphic(window, gRenderer);
 
@@ -45,7 +46,7 @@ Context::Context(void)
 	Mob* test2 = new Mob("junior", 4, 1, 0, "pacTEST.bmp", 0);
 	test2->setPosX(64);
 	test2->setPosY(0);
-	//map->addEntity(test2);
+	map->addEntity(test2);
 
 
 }
@@ -57,6 +58,8 @@ Context::~Context(void)
 	delete(graphicEngine);
 	delete(audioEngine);
 	delete(map);
+	
+	SDL_DestroyRenderer(gRenderer);
 	//Destroy window
 	SDL_DestroyWindow( window );
 
@@ -154,6 +157,11 @@ bool Context::launchGame(){
 
 		map->moveEntities();
 
+		for(int i=1; i < map->getTableEntities().size(); i++){
+			if(physicEngine->collision(map->getEntityX(0),map->getEntityY(0), map->getEntityX(i), map->getEntityY(i) )){
+				int test = 1;
+			}
+		}
 
 		graphicEngine->displayBackground(*map);
 		graphicEngine->displayEntities(map->getTableEntities());

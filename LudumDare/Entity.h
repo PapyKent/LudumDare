@@ -40,5 +40,8 @@ public:
 	int getPosX(){return posX;}
 	int getPosY(){return posY;}
 
+	bool takeDMG(int dmg);
+	bool isDead();
+
 };
 

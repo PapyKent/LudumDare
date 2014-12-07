@@ -40,6 +40,8 @@ public:
 
 	void testAffiche();
 	void chargerTableau(string nomFichier);
+	int getEntityX(int index);
+	int getEntityY(int index);
 
 	void moveEntities();
 	bool checkMove(int x, int y,int or);

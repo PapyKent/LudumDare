@@ -13,6 +13,7 @@ Entity::Entity( string nameEntity,  int entitySpeed,  int orientation,
 				   this->entityOrientation =orientation;
 				   this->hp = hp;
 				   loader=entitySprite;
+				  
 
 }
 
@@ -20,7 +21,9 @@ Entity::~Entity(void){
 
 }
 
-	bool Entity::takeDMG(int dmg){
+bool Entity::takeDMG(int dmg, bool mort){
+			if(!mort)
+			hp=hp-dmg;
 
-		return true;
-	}
+			return true;
+}

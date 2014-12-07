@@ -51,5 +51,10 @@ public:
 	Entity* findEntity(int index);
 
 	vector<Entity> getTableEntities();
+
+	bool heroDead();
+	bool bam(int);
+	void respawn();
+	void bamHero(bool);
 };
 

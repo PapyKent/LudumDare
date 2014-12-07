@@ -40,8 +40,8 @@ public:
 	int getPosX(){return posX;}
 	int getPosY(){return posY;}
 
-	bool takeDMG(int dmg);
-	bool isDead();
+	bool takeDMG(int dmg, bool mort);
+	bool isDead(){if(hp<=0)return true; return false;}
 
 };
 

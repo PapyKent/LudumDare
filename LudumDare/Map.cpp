@@ -310,10 +310,84 @@ void Map::activateAI(void){
 
 			}
 			cursor->setEntityOrientation(i);
-		
+
 
 		}
 	}
 }
 
 
+bool Map::heroDead(){
+	vector<Entity>::iterator cursor;
+	for(cursor=tableEntities.begin();cursor!=tableEntities.end();cursor++){
+		if(cursor->getNameEntity()=="ghost"){
+			if(cursor->isDead())return true;
+		}
+	}
+
+	return false;
+}
+
+bool Map::bam(int i){
+	vector<Entity>::iterator cursor;
+	int tmp=0;
+	for(cursor=tableEntities.begin();cursor!=tableEntities.end();cursor++){
+		if(tmp==i){
+			bamHero(cursor->isDead());
+			cursor->takeDMG(1,cursor->isDead());
+			
+		}
+		tmp++;
+	}
+
+	
+
+
+	return true;
+}
+
+void Map::bamHero(bool b){
+	vector<Entity>::iterator cursor;
+	for(cursor=tableEntities.begin();cursor!=tableEntities.end();cursor++){
+		if(cursor->getNameEntity()=="ghost")cursor->takeDMG(1,b);
+	}
+}
+
+void Map::respawn(){
+
+	SDL_Delay(1500);
+	int tmp=0;
+	vector<Entity>::iterator cursor;
+	for(cursor=tableEntities.begin();cursor!=tableEntities.end();cursor++){
+
+		if(tmp==0){
+			cursor->setPosX(0);
+			cursor->setPosY(0);
+			cursor->setHp(1);
+			cursor->setEntitySpeed(0);
+			
+		}
+
+		else if(tmp==1){
+			cursor->setPosX(9*CASE);
+			cursor->setPosY(6*CASE);
+			cursor->setHp(1);
+		}
+
+		else if(tmp==2){
+
+			cursor->setPosX(20*CASE);
+			cursor->setPosY(6*CASE);
+			cursor->setHp(1);
+		}
+
+		else if(tmp==3){
+			cursor->setPosX(13*CASE);
+			cursor->setPosY(0);
+			cursor->setHp(50);
+
+		}
+		tmp++;
+		}
+	
+	}

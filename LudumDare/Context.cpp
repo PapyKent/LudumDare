@@ -40,24 +40,24 @@ Context::Context(void)
 	//audioEngine->start(1);
 
 	map=new Map(gRenderer);
-	Hero* test = new Hero("ghost", 0, 1, 0, "ghost1.bmp", 0);
+	Hero* test = new Hero("ghost", 0, 1, 1, "ghost1.bmp", 0);
 	test->setPosX(0);
 	test->setPosY(0);
 	map->addEntity(test);
 
-	
-	Mob* test3 = new Mob("junior", 3, 1, 0, "pacTEST.bmp", 0);
+
+	Mob* test3 = new Mob("junior", 3, 1, 1, "pacTEST.bmp", 0);
 	test3->setPosX(9*CASE);
 	test3->setPosY(6*CASE);
 	map->addEntity(test3);
 
-	
-	Mob* test4 = new Mob("junior", 3, 1, 0, "pacTEST.bmp", 0);
+
+	Mob* test4 = new Mob("junior", 3, 1, 1, "pacTEST.bmp", 0);
 	test4->setPosX(20*CASE);
 	test4->setPosY(6*CASE);
 	map->addEntity(test4);
 
-	Pacman* test2 = new Pacman("Pacman", 4, 1, 0, "pacTEST.bmp", 0);
+	Pacman* test2 = new Pacman("Pacman", 4, 1, 50, "pacTEST.bmp", 0);
 	test2->setPosX(13*CASE);
 	test2->setPosY(0);
 	map->addEntity(test2);
@@ -71,7 +71,7 @@ Context::~Context(void)
 	delete(graphicEngine);
 	delete(audioEngine);
 	delete(map);
-	
+
 	SDL_DestroyRenderer(gRenderer);
 	//Destroy window
 	SDL_DestroyWindow( window );
@@ -105,7 +105,7 @@ bool Context::launchGame(){
 			//User presses a key
 			else if( e.type == SDL_KEYDOWN )
 			{
-				
+
 				//Select surfaces based on key press
 				switch( e.key.keysym.sym ) { 
 				case SDLK_UP:  {
@@ -176,13 +176,23 @@ bool Context::launchGame(){
 
 		for(int i=1; i < map->getTableEntities().size(); i++){
 			if(physicEngine->collision(map->getEntityX(0),map->getEntityY(0), map->getEntityX(i), map->getEntityY(i) )){
-				int test = 1;
+				map->bam(i);
 			}
 		}
 
 		graphicEngine->displayBackground(*map);
 		graphicEngine->displayEntities(map->getTableEntities());
 		graphicEngine->refresh();
+
+		if(map->heroDead()){
+
+			map->respawn();
+			haut=false;
+			bas=false;
+			droite=false;
+			gauche=false;
+		}
+
 	}
 
 	return true;
@@ -200,3 +210,4 @@ bool Context::createRenderer()
 
 	return true;
 }
+

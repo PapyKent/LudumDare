@@ -25,5 +25,6 @@ public:
 	bool restart();
 	bool quit();
 	bool createRenderer();
+	
 };
 

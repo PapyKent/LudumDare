@@ -31,9 +31,8 @@ public:
 	void setEntityOrientation(int index, int or);
 	void setEntitySpeed(int index, int speed);
 
-	void addItem(Item i);
-	void removeItem(string nom);
-	void removeItem(int index);
+	void addItem(Item* i);
+	vector<Item> getTableItems(){ return tableItems;};
 
 	int getLevel(){return level;}
 	void setLevel(int l){level=l;}

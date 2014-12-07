@@ -35,12 +35,6 @@ void Map::chargerTableau(string nomFichier){
 				//	fichier.get(tableau[i][j]);
 			}
 		}
-
-
-
-
-
-
 	}
 	else  // sinon
 		cerr << "Impossible d'ouvrir le fichier !" << endl;
@@ -186,26 +180,9 @@ void Map::removeEntity(int index){
 	}
 }
 
-void Map::addItem(Item i){
+void Map::addItem(Item* i){
 
-	tableItems.push_back(i);
-
-}
-void Map::removeItem(string nom){
-
-	vector<Item>::iterator cursor;
-	for(cursor= tableItems.begin();cursor!=tableItems.end();cursor++){
-		if(cursor->getnameItem()==nom) tableItems.erase(cursor);
-
-	}
-}
-void Map::removeItem(int index){
-	int tmp=0;
-	vector<Item>::iterator cursor;
-	for(cursor= tableItems.begin();cursor!=tableItems.end();cursor++){
-		if(tmp==index) tableItems.erase(cursor);
-		tmp++;
-	}
+	tableItems.push_back(*i);
 
 }
 
@@ -382,16 +359,16 @@ void Map::activateHeroAttack(){
 
 	switch(orientation){
 	case 1:
-		rangeX+=-70;
+		rangeX+=-50;
 		break;
 	case 2:
-		rangeY+=70+CASE;
+		rangeY+=50+CASE;
 		break;
 	case 3:
-		rangeX+=70+CASE;
+		rangeX+=50+CASE;
 		break;
 	case 4:
-		rangeY+=-70;
+		rangeY+=-50;
 		break;
 	}
 	casedegatX =posXhero+rangeX;

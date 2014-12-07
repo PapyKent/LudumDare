@@ -8,9 +8,11 @@ Graphic::Graphic(SDL_Window* wind ,SDL_Renderer* gRend)
 	window = wind;
 	SDL_Surface* loadedSurface = SDL_LoadBMP("map.bmp");
 	bg = SDL_CreateTextureFromSurface( gRenderer, loadedSurface );
-
+	SDL_Surface* loadedSurface2 = SDL_LoadBMP("pan.bmp");
+	SDL_SetColorKey(loadedSurface2, SDL_TRUE, SDL_MapRGB( loadedSurface2->format, 0, 255, 255 ) );
+	pan = SDL_CreateTextureFromSurface( gRenderer, loadedSurface2 );
 	SDL_FreeSurface( loadedSurface );
-
+	SDL_FreeSurface( loadedSurface2 );
 
 	//Clip
 	for(int i = 0; i < 16; i++){
@@ -63,7 +65,7 @@ void Graphic::refresh(){
 }
 
 
-void Graphic::displayEntities(vector<Entity> tableEntities){
+void Graphic::displayEntities(vector<Entity> tableEntities, bool attack){
 	SDL_Surface* loadedSurface=NULL;
 	SDL_Texture* tex=NULL;
 	SDL_Rect clap;
@@ -71,6 +73,16 @@ void Graphic::displayEntities(vector<Entity> tableEntities){
 	clap.y=0;
 	clap.w=32;
 	clap.h=32;
+
+	SDL_Rect cloup[4];
+
+	for(int i=0; i < 4; i++){
+		cloup[i].x=i*32;
+		cloup[i].y=0;
+		cloup[i].w =32;
+		cloup[i].h = 32;
+	}
+
 	vector<Entity>::iterator cursor;
 	for(cursor= tableEntities.begin();cursor!=tableEntities.end();cursor++){
 		if(!cursor->isDead()){
@@ -81,6 +93,42 @@ void Graphic::displayEntities(vector<Entity> tableEntities){
 			SDL_FreeSurface( loadedSurface );
 		}
 	}
+	if(attack){
+		int coordX = tableEntities[0].getPosX();
+		int coordY = tableEntities[0].getPosY();
+		int orient = tableEntities[0].getEntityOrientation();
+
+		switch(orient){
+		case 1:
+			coordX-=CASE;
+			if(coordX>=0){
+				render(pan, coordX, coordY, &cloup[orient-1]);
+			}
+			break;
+		case 2:
+			coordY+=CASE*2;
+			if(coordY<=1024){
+				render(pan, coordX, coordY, &cloup[orient-1]);
+			}
+			break;
+		case 3:
+			coordX+=CASE*2;
+			if(coordX<=768){
+				render(pan, coordX, coordY, &cloup[orient-1]);
+			}
+			break;
+		case 4:
+			coordY-=CASE;
+			if(coordY>=0){
+				render(pan, coordX, coordY, &cloup[orient-1]);
+			}
+			break;
+		}
+
+	}
+
+
+
 }
 
 void Graphic::render(SDL_Texture* mTexture, int x, int y, SDL_Rect* clip)

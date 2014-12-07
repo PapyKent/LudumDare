@@ -11,13 +11,14 @@ class Graphic
 	SDL_Window* window;
 	SDL_Rect clip[ 16 ];
 	SDL_Texture *bg;
+	SDL_Texture *pan;
 
 public:
 	Graphic(SDL_Window* window, SDL_Renderer* gRenderer);
 	~Graphic(void);
 
 	void displayBackground(Map map);
-	void displayEntities(vector<Entity>);
+	void displayEntities(vector<Entity>, bool);
 	void refresh();
 	void display(SDL_Texture* mTexture, int x, int y, int frame);
 	void render(SDL_Texture*, int x, int y, SDL_Rect* clip );

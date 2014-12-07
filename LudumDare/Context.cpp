@@ -65,7 +65,7 @@ Context::~Context(void)
 
 	SDL_DestroyRenderer(gRenderer);
 	//Destroy window
-	   SDL_DestroyWindow( window );
+	SDL_DestroyWindow( window );
 
 	//Quit SDL subsystems
 	SDL_Quit();
@@ -154,7 +154,6 @@ bool Context::launchGame(){
 		}
 		if(attack){
 			map->activateHeroAttack();
-			attack=false;
 		}
 
 		if(droite)key=2;
@@ -190,7 +189,9 @@ bool Context::launchGame(){
 			gauche=false;
 		}
 		graphicEngine->displayBackground(*map);
-		graphicEngine->displayEntities(map->getTableEntities());
+		graphicEngine->displayEntities(map->getTableEntities(), attack);
+			attack=false;
+
 
 		if(victory(map->getEntityX(0), map->getEntityY(0))){
 			return true;
@@ -254,6 +255,6 @@ bool Context::gameOver(){
 
 
 	}
-			return false;
+	return false;
 }
 

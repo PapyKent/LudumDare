@@ -28,6 +28,8 @@ public:
 	void addEntity(Entity* c);
 	void removeEntity(string nom);
 	void removeEntity(int index);
+	void setEntityOrientation(int index, int or);
+	void setEntitySpeed(int index, int speed);
 
 	void addItem(Item i);
 	void removeItem(string nom);

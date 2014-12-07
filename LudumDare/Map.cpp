@@ -60,6 +60,18 @@ vector<Entity> Map::getTableEntities(){
 	return tableEntities;
 }
 
+void Map::setEntityOrientation(int index, int or){
+	if(index<tableEntities.size()){
+		tableEntities[index].setEntityOrientation(or);
+	}
+}
+
+void Map::setEntitySpeed(int index, int speed){
+	if(index<tableEntities.size()){
+		tableEntities[index].setEntitySpeed(speed);
+	}
+}
+
 void Map::moveEntities(){
 
 	vector<Entity>::iterator cursor;
@@ -79,10 +91,10 @@ void Map::moveEntities(){
 				cursor->setPosX(cursor->getPosX()+cursor->getEntitySpeed());
 			}
 			else if(cursor->getEntityOrientation()==3){
-				cursor->setPosX(cursor->getPosY()+cursor->getEntitySpeed());
+				cursor->setPosY(cursor->getPosY()+cursor->getEntitySpeed());
 			}
 			else if(cursor->getEntityOrientation()==4){
-				cursor->setPosY(cursor->getPosX()-cursor->getEntitySpeed());
+				cursor->setPosY(cursor->getPosY()-cursor->getEntitySpeed());
 			}
 
 		}
@@ -92,24 +104,24 @@ void Map::moveEntities(){
 bool Map:: checkMove(int x, int y, int or){
 	if(or==1){ 
 		if(y>0){
-			if(tableau[x][y-1]==0)return true;
+			if(tableau[x][y-1]=='0')return true;
 			else return false;}
 	}
 	else if(or==2){
 		if(x<32){
-			if(tableau[x+1][y]==0)return true;
+			if(tableau[x+1][y]=='0')return true;
 			else return false;
 		}
 	}
 	else if(or==3){
 		if(y<24){
-			if(tableau[x][y+1]==0)return true;
+			if(tableau[x][y+1]=='0')return true;
 			else return false;
 		}
 	}
 	else if(or==4){
 		if(x>0){
-			if(tableau[x-1][y]==0)return true;
+			if(tableau[x-1][y]=='0')return true;
 			else return false;
 		}
 	}
@@ -248,7 +260,7 @@ void Map::activateAI(void){
 				//sinan c'est qu'il y a un gros probleme et qu'il se casse de l'écran, ce qui ne rentre pas dans le thème, du coup on gère pas et FATAL ERROR...
 			}
 		}
-		else{
+		else if(cursor->getNameEntity()=="junior"){
 
 
 

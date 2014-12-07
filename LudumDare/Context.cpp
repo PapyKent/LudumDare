@@ -37,12 +37,12 @@ Context::Context(void)
 	audioEngine->start(1);
 
 	map = new Map(gRenderer);
-	Mob* test = new Mob("test", 0, 1, 0, "pacTEST.bmp", 0);
+	Mob* test = new Mob("ghost", 0, 1, 0, "pacTEST.bmp", 0);
 	test->setPosX(0);
 	test->setPosY(0);
 	map->addEntity(test);
 
-		Mob* test2 = new Mob("test2", 0, 1, 0, "pacTEST.bmp", 0);
+	Mob* test2 = new Mob("junior", 0, 1, 0, "pacTEST.bmp", 0);
 	test->setPosX(64);
 	test->setPosY(0);
 	map->addEntity(test);
@@ -87,38 +87,38 @@ bool Context::launchGame(){
 				//Select surfaces based on key press
 				switch( e.key.keysym.sym ) { 
 				case SDLK_UP:  {
-					map->getTableEntities().begin()->setEntityOrientation(1);
-					map->getTableEntities().begin()->setEntitySpeed(5); //valeur test
+					map->setEntityOrientation(0, 1);
+					map->setEntitySpeed(0, 5); //valeur test
 							   }
-				break; 
+							   break; 
 				case SDLK_DOWN: {
-					map->getTableEntities().begin()->setEntityOrientation(3);
-					map->getTableEntities().begin()->setEntitySpeed(5); //valeur test			
+					map->setEntityOrientation(0, 3);
+					map->setEntitySpeed(0, 5); //valeur test			
 								}
-				break; 
+								break; 
 				case SDLK_LEFT: {
-					map->getTableEntities().begin()->setEntityOrientation(4);
-					map->getTableEntities().begin()->setEntitySpeed(5); //valeur test			
+					map->setEntityOrientation(0, 4);
+					map->setEntitySpeed(0, 5); //valeur test			
 								}
-				break;
+								break;
 				case SDLK_RIGHT: {
-					map->getTableEntities().begin()->setEntityOrientation(2);
-					map->getTableEntities().begin()->setEntitySpeed(5); //valeur test			 
+					map->setEntityOrientation(0, 2);
+					map->setEntitySpeed(0, 5); //valeur test			 
 								 }
-				break; 
+								 break; 
 
-				default: map->getTableEntities().begin()->setEntitySpeed(0);
-				break;
+				default: map->setEntitySpeed(0,0);
+					break;
 				} 
 			}
-			map->activateAI();
-			map->moveEntities();
-
-
-			graphicEngine->displayBackground(*map);
-			graphicEngine->displayEntities(map->getTableEntities());
-			graphicEngine->refresh();
 		}
+		map->activateAI();
+		map->moveEntities();
+
+
+		graphicEngine->displayBackground(*map);
+		graphicEngine->displayEntities(map->getTableEntities());
+		graphicEngine->refresh();
 	}
 
 	return true;
@@ -126,7 +126,7 @@ bool Context::launchGame(){
 
 bool Context::createRenderer()
 {
-	gRenderer = SDL_CreateRenderer( window, -1, 0 );
+	gRenderer = SDL_CreateRenderer( window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC );
 
 	if ( gRenderer == nullptr )
 	{

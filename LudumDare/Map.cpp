@@ -79,25 +79,45 @@ void Map::moveEntities(){
 	for(cursor= tableEntities.begin();cursor!=tableEntities.end();cursor++){
 		int actualX=cursor->getPosX();
 		int  actualY=cursor->getPosY();
-		actualX=((actualX+16)/CASE);
-		actualY=((actualY+16)/CASE);
+		actualX=((actualX+10)/CASE);
+		actualY=((actualY+10)/CASE);
 
 
 
 		if(checkMove(actualX,actualY,cursor->getEntityOrientation())){
 			if(cursor->getEntityOrientation()==1){ 
 				cursor->setPosX(cursor->getPosX()-cursor->getEntitySpeed());
+				cursor->setPosY(actualY*CASE);
 			}
 			else if(cursor->getEntityOrientation()==2){
 				cursor->setPosY(cursor->getPosY()+cursor->getEntitySpeed());
+				cursor->setPosX(actualX*CASE);
 			}
 			else if(cursor->getEntityOrientation()==3){
 				cursor->setPosX(cursor->getPosX()+cursor->getEntitySpeed());
+				cursor->setPosY(actualY*CASE);
 			}
 			else if(cursor->getEntityOrientation()==4){
 				cursor->setPosY(cursor->getPosY()-cursor->getEntitySpeed());
+				cursor->setPosX(actualX*CASE);
 			}
 
+		}
+		else{
+
+			if(cursor->getEntityOrientation()==1){ 
+				cursor->setPosX(actualX*CASE);
+				
+			}
+			else if(cursor->getEntityOrientation()==2){
+				cursor->setPosY(actualY*CASE);
+			}
+			else if(cursor->getEntityOrientation()==3){
+				cursor->setPosX(actualX*CASE);
+			}
+			else if(cursor->getEntityOrientation()==4){
+				cursor->setPosY(actualY*CASE);
+			}
 		}
 	}
 }
@@ -109,7 +129,7 @@ bool Map:: checkMove(int x, int y, int or){
 			else return false;
 	}
 	else if(or==2){
-		if(y<32)
+		if(y<31)
 			if(tableau[x][y+1]=='0')return true;
 			else return false;
 		

@@ -55,6 +55,7 @@ public:
 	bool heroDead();
 	bool bam(int);
 	void respawn();
+	void respawn(int);
 	void bamHero(bool);
 };
 

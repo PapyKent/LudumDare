@@ -45,22 +45,15 @@ Context::Context(void)
 	test->setPosY(0);
 	map->addEntity(test);
 
-
-	Mob* test3 = new Mob("junior", 3, 1, 1, "pacTEST.bmp", 0);
-	test3->setPosX(9*CASE);
-	test3->setPosY(6*CASE);
-	map->addEntity(test3);
-
-
-	Mob* test4 = new Mob("junior", 3, 1, 1, "pacTEST.bmp", 0);
-	test4->setPosX(20*CASE);
-	test4->setPosY(6*CASE);
-	map->addEntity(test4);
-
-	Pacman* test2 = new Pacman("Pacman", 4, 1, 50, "pacTEST.bmp", 0);
-	test2->setPosX(13*CASE);
-	test2->setPosY(0);
+	Pacman* test2 = new Pacman("Pacman", 4, 1, 50, "pacman.bmp", 0);
 	map->addEntity(test2);
+
+	for(int i = 0; i < 6; i ++){
+		map->addEntity(new Mob("junior", 3, 1, 1, "junior.bmp", 0));
+	}
+
+
+	map->respawn();
 
 }
 

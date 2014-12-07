@@ -335,12 +335,12 @@ bool Map::bam(int i){
 		if(tmp==i){
 			bamHero(cursor->isDead());
 			cursor->takeDMG(1,cursor->isDead());
-			
+
 		}
 		tmp++;
 	}
 
-	
+
 
 
 	return true;
@@ -350,6 +350,64 @@ void Map::bamHero(bool b){
 	vector<Entity>::iterator cursor;
 	for(cursor=tableEntities.begin();cursor!=tableEntities.end();cursor++){
 		if(cursor->getNameEntity()=="ghost")cursor->takeDMG(1,b);
+	}
+}
+
+void Map::respawn(int num){
+	if(num<tableEntities.size()){
+		switch(num){
+		case 0:
+			tableEntities[num].setPosX(0);
+			tableEntities[num].setPosY(0);
+			tableEntities[num].setHp(1);
+			tableEntities[num].setEntitySpeed(0);
+			break;
+		case 1:
+			tableEntities[num].setPosX(9*CASE);
+			tableEntities[num].setPosY(6*CASE);
+			tableEntities[num].setHp(1);
+			break;
+		case 2:
+			tableEntities[num].setPosX(20*CASE);
+			tableEntities[num].setPosY(6*CASE);
+			tableEntities[num].setHp(1);
+			break;
+		case 3:
+
+			tableEntities[num].setPosX(13*CASE);
+			tableEntities[num].setPosY(0*CASE);
+			tableEntities[num].setHp(1);
+			break;
+		case 4:
+			tableEntities[num].setPosX(19*CASE);
+			tableEntities[num].setPosY(30*CASE);
+			tableEntities[num].setHp(1);
+			break;
+		case 5:
+			tableEntities[num].setPosX(10*CASE);
+			tableEntities[num].setPosY(7*CASE);
+			tableEntities[num].setHp(1);
+			break;
+		case 6:
+
+			tableEntities[num].setPosX(16*CASE);
+			tableEntities[num].setPosY(25*CASE);
+			tableEntities[num].setHp(1);
+			break;
+		case 7:
+
+			tableEntities[num].setPosX(4*CASE);
+			tableEntities[num].setPosY(26*CASE);
+			tableEntities[num].setHp(1);
+			break;
+		case 8:
+
+			tableEntities[num].setPosX(4*CASE);
+			tableEntities[num].setPosY(17*CASE);
+			tableEntities[num].setHp(1);
+			break;
+		}
+
 	}
 }
 
@@ -365,7 +423,7 @@ void Map::respawn(){
 			cursor->setPosY(0);
 			cursor->setHp(1);
 			cursor->setEntitySpeed(0);
-			
+
 		}
 
 		else if(tmp==1){
@@ -387,7 +445,37 @@ void Map::respawn(){
 			cursor->setHp(50);
 
 		}
-		tmp++;
+		else if(tmp==4){
+			cursor->setPosX(19*CASE);
+			cursor->setPosY(30*CASE);
+			cursor->setHp(50);
+
 		}
-	
+		else if(tmp==5){
+			cursor->setPosX(10*CASE);
+			cursor->setPosY(7);
+			cursor->setHp(50);
+
+		}
+		else if(tmp==6){
+			cursor->setPosX(16*CASE);
+			cursor->setPosY(25*CASE);
+			cursor->setHp(50);
+
+		}
+		else if(tmp==7){
+			cursor->setPosX(4*CASE);
+			cursor->setPosY(26*CASE);
+			cursor->setHp(50);
+
+		}
+		else if(tmp==8){
+			cursor->setPosX(4*CASE);
+			cursor->setPosY(17*CASE);
+			cursor->setHp(50);
+
+		}
+		tmp++;
 	}
+
+}

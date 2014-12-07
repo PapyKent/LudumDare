@@ -52,9 +52,6 @@ Context::Context(void)
 		map->addEntity(new Mob("junior", 3, 1, 1, "junior.bmp", 0));
 	}
 
-
-	map->respawn();
-
 }
 
 Context::~Context(void)
@@ -87,6 +84,8 @@ bool Context::launchGame(){
 	bool gauche=false;
 
 	bool attack=false;
+
+	map->respawn();
 
 	while(!quit){
 
@@ -169,8 +168,8 @@ bool Context::launchGame(){
 		}
 		else map->setEntitySpeed(0, 0);
 		int tmp=(rand()%30)+1;
-//		if(tmp==5)
-//			map->activateAI();
+		if(tmp==5)
+			map->activateAI();
 
 
 		map->moveEntities();
@@ -191,6 +190,11 @@ bool Context::launchGame(){
 		}
 		graphicEngine->displayBackground(*map);
 		graphicEngine->displayEntities(map->getTableEntities());
+
+		if(victory(map->getEntityX(0), map->getEntityY(0))){
+			quit=true;
+		}
+
 		graphicEngine->refresh();
 
 	}
@@ -209,5 +213,47 @@ bool Context::createRenderer()
 	}
 
 	return true;
+}
+
+bool Context::victory(int posx, int posy)
+{
+	int xTarget=23;
+	int yTarget=31;
+
+	if(posx/32==xTarget && posy/32==yTarget){
+		return true;
+	}
+	return false;
+}
+
+bool Context::gameOver(){
+
+	SDL_RenderClear( gRenderer );
+	bool quit=false;
+	SDL_Event e;
+
+	while(!quit){
+
+		while(SDL_PollEvent(&e) !=0){
+			if( e.type == SDL_QUIT )
+			{
+				quit = true;
+			}
+			//User presses a key
+			else if( e.type == SDL_KEYDOWN )
+			{
+
+				//Select surfaces based on key press
+				switch( e.key.keysym.sym ) { 
+				case SDLK_SPACE:
+					launchGame();
+					break;
+				}
+			}
+		}
+
+
+	}
+			return true;
 }
 

@@ -6,9 +6,8 @@ int main( int argc, char* args[] )
 {
 	Context game;
 
-
 		game.launchGame();
-
+		game.gameOver();
 
 
 

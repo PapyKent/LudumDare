@@ -25,6 +25,8 @@ public:
 	bool restart();
 	bool quit();
 	bool createRenderer();
+	bool victory(int, int);
+	bool gameOver();
 	
 };
 

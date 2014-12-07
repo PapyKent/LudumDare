@@ -6,47 +6,20 @@ Graphic::Graphic(SDL_Window* wind ,SDL_Renderer* gRend)
 {
 	gRenderer=gRend;
 	window = wind;
-	SDL_Surface* loadedSurface = SDL_LoadBMP("testBG.bmp");
+	SDL_Surface* loadedSurface = SDL_LoadBMP("map.bmp");
 	bg = SDL_CreateTextureFromSurface( gRenderer, loadedSurface );
 
 	SDL_FreeSurface( loadedSurface );
 
 
 	//Clip
-	clip[0].x = 0;
-	clip[0].y = 0;
-	clip[0].w = CASE;
-	clip[0].h = CASE;
+	for(int i = 0; i < 12; i++){
+	clip[i].x = CASE*i;
+	clip[i].y = 0;
+	clip[i].w = CASE;
+	clip[i].h = CASE;
+	}
 
-	clip[1].x = CASE;
-	clip[1].y = 0;
-	clip[1].w = CASE;
-	clip[1].h = CASE;
-
-	clip[2].x = CASE*2;
-	clip[2].y = 0;
-	clip[2].w = CASE;
-	clip[2].h = CASE;
-
-	clip[3].x = CASE*3;
-	clip[3].y = 0;
-	clip[3].w = CASE;
-	clip[3].h = CASE;
-
-	clip[4].x = CASE*4;
-	clip[4].y = 0;
-	clip[4].w = CASE;
-	clip[4].h = CASE;
-
-	clip[5].x = CASE*5;
-	clip[5].y = 0;
-	clip[5].w = CASE;
-	clip[5].h = CASE;
-
-	clip[6].x = CASE*6;
-	clip[6].y = 0;
-	clip[6].w = CASE;
-	clip[6].h = CASE;
 
 }
 

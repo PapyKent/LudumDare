@@ -38,7 +38,7 @@ Context::Context(void)
 	//audioEngine->start(1);
 
 	map = new Map(gRenderer);map->testAffiche();
-	Mob* test = new Mob("ghost", 0, 1, 0, "pacTEST.bmp", 0);
+	Mob* test = new Mob("ghost", 0, 1, 0, "ghost1.bmp", 0);
 	test->setPosX(0);
 	test->setPosY(60);
 	map->addEntity(test);

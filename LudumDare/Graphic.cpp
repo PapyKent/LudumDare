@@ -103,11 +103,16 @@ void Graphic::displayEntities(vector<Entity> tableEntities){
 	}
 }
 
-void Graphic::render(SDL_Texture* mTexture, int x, int y, SDL_Rect* clip )
+void Graphic::render(SDL_Texture* mTexture, int x, int y, SDL_Rect* clip)
 {
-	//Set rendering space and render to screen
+	
+	
 	SDL_Rect renderQuad = { y, x, CASE, CASE };
+	//Set rendering space and render to screen
 
+	
+	
+	
 	if( clip != NULL )
 	{
 		renderQuad.w = clip->w;

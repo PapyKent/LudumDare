@@ -2,9 +2,10 @@
 #include "Entity.h"
 #include "Item.h"
 #include <fstream>
-
+#include <ctime>
 Map::Map(SDL_Renderer* g)
 {
+	srand(time(NULL));
 	gRenderer=g;
 	level=0;
 
@@ -25,12 +26,12 @@ void Map::chargerTableau(string nomFichier){
 	if(fichier)  // si l'ouverture a réussi
 	{     
 		for(int i=0;i<24;i++){
-			for(int j=0;j<32;j++){
+			for(int j=0;j<=32;j++){
 
 				fichier.get(tmp);
-				if(tmp>='0' && tmp<='9')
+				if(j<32)
 					tableau[i][j]=tmp;
-				else j--;
+				
 				//	fichier.get(tableau[i][j]);
 			}
 		}
@@ -79,19 +80,19 @@ void Map::moveEntities(){
 		int actualX=cursor->getPosX();
 		int  actualY=cursor->getPosY();
 		actualX=((actualX+16)/CASE);
-		actualX=((actualY+16)/CASE);
+		actualY=((actualY+16)/CASE);
 
 
 
 		if(checkMove(actualX,actualY,cursor->getEntityOrientation())){
 			if(cursor->getEntityOrientation()==1){ 
-				cursor->setPosY(cursor->getPosY()-cursor->getEntitySpeed());
+				cursor->setPosX(cursor->getPosX()-cursor->getEntitySpeed());
 			}
 			else if(cursor->getEntityOrientation()==2){
-				cursor->setPosX(cursor->getPosX()+cursor->getEntitySpeed());
+				cursor->setPosY(cursor->getPosY()+cursor->getEntitySpeed());
 			}
 			else if(cursor->getEntityOrientation()==3){
-				cursor->setPosY(cursor->getPosY()+cursor->getEntitySpeed());
+				cursor->setPosX(cursor->getPosX()+cursor->getEntitySpeed());
 			}
 			else if(cursor->getEntityOrientation()==4){
 				cursor->setPosY(cursor->getPosY()-cursor->getEntitySpeed());
@@ -103,27 +104,27 @@ void Map::moveEntities(){
 
 bool Map:: checkMove(int x, int y, int or){
 	if(or==1){ 
-		if(y>0){
-			if(tableau[x][y-1]=='0')return true;
-			else return false;}
-	}
-	else if(or==2){
-		if(x<32){
-			if(tableau[x+1][y]=='0')return true;
-			else return false;
-		}
-	}
-	else if(or==3){
-		if(y<24){
-			if(tableau[x][y+1]=='0')return true;
-			else return false;
-		}
-	}
-	else if(or==4){
-		if(x>0){
+		if(x>0)
 			if(tableau[x-1][y]=='0')return true;
 			else return false;
-		}
+	}
+	else if(or==2){
+		if(y<32)
+			if(tableau[x][y+1]=='0')return true;
+			else return false;
+		
+	}
+	else if(or==3){
+		if(x<24)
+			if(tableau[x+1][y]=='0')return true;
+			else return false;
+		
+	}
+	else if(or==4){
+		if(y>0)
+			if(tableau[x][y-1]=='0')return true;
+			else return false;
+		
 	}
 	return false;
 }
@@ -202,7 +203,7 @@ void Map::activateAI(void){
 		actualY=cursor->getPosY();
 
 		actualX=((actualX+16)/CASE);
-		actualX=((actualY+16)/CASE);	
+		actualY=((actualY+16)/CASE);	
 
 		if(cursor->getNameEntity()=="Pacman"){
 
@@ -261,22 +262,14 @@ void Map::activateAI(void){
 			}
 		}
 		else if(cursor->getNameEntity()=="junior"){
-
-
+			
+			int i= rand()%4+1;
 
 			//pattern test mobs
-			if(checkMove(actualX,actualY,2)){
-				cursor->setEntityOrientation(2);
+			if(checkMove(actualX,actualY,i)){
+				cursor->setEntityOrientation(i);
 			}
-			else if(checkMove(actualX,actualY,4)){
-				cursor->setEntityOrientation(4);
-			}
-			else if(checkMove(actualX,actualY,1)){
-				cursor->setEntityOrientation(1);
-			}
-			else if(checkMove(actualX,actualY,3)){
-				cursor->setEntityOrientation(3);
-			}
+			
 		}
 
 	}

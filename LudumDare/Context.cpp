@@ -36,16 +36,16 @@ Context::Context(void)
 	audioEngine=new Audio();
 	audioEngine->start(1);
 
-	map = new Map(gRenderer);
+	map = new Map(gRenderer);map->testAffiche();
 	Mob* test = new Mob("ghost", 0, 1, 0, "pacTEST.bmp", 0);
 	test->setPosX(0);
-	test->setPosY(0);
+	test->setPosY(60);
 	map->addEntity(test);
 
-	Mob* test2 = new Mob("junior", 0, 1, 0, "pacTEST.bmp", 0);
-	test->setPosX(64);
-	test->setPosY(0);
-	map->addEntity(test);
+	Mob* test2 = new Mob("junior", 4, 1, 0, "pacTEST.bmp", 0);
+	test2->setPosX(64);
+	test2->setPosY(0);
+	//map->addEntity(test2);
 
 
 }
@@ -74,7 +74,7 @@ bool Context::launchGame(){
 
 
 	while(!quit){
-
+		map->setEntitySpeed(0, 0);
 
 		while(SDL_PollEvent(&e) !=0){
 			if( e.type == SDL_QUIT )
@@ -84,26 +84,27 @@ bool Context::launchGame(){
 			//User presses a key
 			else if( e.type == SDL_KEYDOWN )
 			{
+				map->activateAI();
 				//Select surfaces based on key press
 				switch( e.key.keysym.sym ) { 
 				case SDLK_UP:  {
 					map->setEntityOrientation(0, 1);
-					map->setEntitySpeed(0, 5); //valeur test
+					map->setEntitySpeed(0, 10); //valeur test
 							   }
 							   break; 
 				case SDLK_DOWN: {
 					map->setEntityOrientation(0, 3);
-					map->setEntitySpeed(0, 5); //valeur test			
+					map->setEntitySpeed(0, 10); //valeur test			
 								}
 								break; 
 				case SDLK_LEFT: {
 					map->setEntityOrientation(0, 4);
-					map->setEntitySpeed(0, 5); //valeur test			
+					map->setEntitySpeed(0, 10); //valeur test			
 								}
 								break;
 				case SDLK_RIGHT: {
 					map->setEntityOrientation(0, 2);
-					map->setEntitySpeed(0, 5); //valeur test			 
+					map->setEntitySpeed(0, 10); //valeur test			 
 								 }
 								 break; 
 
@@ -111,8 +112,10 @@ bool Context::launchGame(){
 					break;
 				} 
 			}
+
+			 
 		}
-		map->activateAI();
+		
 		map->moveEntities();
 
 

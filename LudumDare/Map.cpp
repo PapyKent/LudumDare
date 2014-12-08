@@ -410,8 +410,9 @@ bool Map::activateHeroAttack(){
 			break;
 		}
 
-		return retour;
+
 	}
+			return retour;
 }
 /*
 void Map::respawn(int num){
@@ -474,7 +475,6 @@ break;
 
 void Map::respawn(int niveau){
 
-	SDL_Delay(1500); // Creer ecran fail
 	if(niveau==1){
 		int tmp=0;
 		vector<Entity>::iterator cursor;
@@ -496,20 +496,20 @@ void Map::respawn(int niveau){
 				break;
 
 			case 2:
-				cursor->setPosX(20*CASE);
+				cursor->setPosX(19*CASE);
 				cursor->setPosY(6*CASE);
 				cursor->setHp(1);
 				break;
 
 			case 3:
-				cursor->setPosX(19*CASE);
+				cursor->setPosX(18*CASE);
 				cursor->setPosY(16*CASE);
 				cursor->setHp(1);
 				break;
 
 			case 4:
 				cursor->setPosX(19*CASE);
-				cursor->setPosY(29*CASE);
+				cursor->setPosY(30*CASE);
 				cursor->setHp(1);
 				break;
 
@@ -532,7 +532,7 @@ void Map::respawn(int niveau){
 				break;
 
 			case 8:
-				cursor->setPosX(4*CASE);
+				cursor->setPosX(3*CASE);
 				cursor->setPosY(17*CASE);
 				cursor->setHp(1);
 				break;

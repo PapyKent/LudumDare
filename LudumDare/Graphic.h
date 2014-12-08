@@ -12,6 +12,9 @@ class Graphic
 	SDL_Rect clip[ 18 ];
 	SDL_Texture *bg;
 	SDL_Texture *pan;
+	SDL_Texture *pacman;
+	SDL_Texture *junior;
+	SDL_Texture *ghost;
 	int frame;
 
 public:

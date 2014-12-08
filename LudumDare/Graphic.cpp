@@ -12,26 +12,52 @@ Graphic::Graphic(SDL_Window* wind ,SDL_Renderer* gRend)
 	SDL_Surface* loadedSurface2 = SDL_LoadBMP("bam.bmp");
 	SDL_SetColorKey(loadedSurface2, SDL_TRUE, SDL_MapRGB( loadedSurface2->format, 0, 255, 255 ) );
 	pan = SDL_CreateTextureFromSurface( gRenderer, loadedSurface2 );
-
-	SDL_FreeSurface( loadedSurface );
-	SDL_FreeSurface( loadedSurface2 );
-
-	//Clip
-	for(int i = 0; i < 18; i++){
-		clip[i].x = CASE*i;
-		clip[i].y = 0;
-		clip[i].w = CASE;
-		clip[i].h = CASE;
+	if(loadedSurface!=NULL){
+		SDL_FreeSurface( loadedSurface );
+	}
+	if(loadedSurface!=NULL){
+		SDL_FreeSurface( loadedSurface2 );
 	}
 
+	loadedSurface = SDL_LoadBMP("ghost1.bmp");
+	SDL_SetColorKey(loadedSurface, SDL_TRUE, SDL_MapRGB( loadedSurface->format, 0, 255, 255 ) );
+	ghost = SDL_CreateTextureFromSurface( gRenderer, loadedSurface );
+	if(loadedSurface!=NULL){
+		SDL_FreeSurface( loadedSurface );
+	}
+	loadedSurface = SDL_LoadBMP("pacman.bmp");
+	SDL_SetColorKey(loadedSurface, SDL_TRUE, SDL_MapRGB( loadedSurface->format, 0, 255, 255 ) );
+	pacman = SDL_CreateTextureFromSurface( gRenderer, loadedSurface );
+
+	if(loadedSurface!=NULL){
+		SDL_FreeSurface( loadedSurface );
+		loadedSurface = SDL_LoadBMP("junior.bmp");
+		SDL_SetColorKey(loadedSurface, SDL_TRUE, SDL_MapRGB( loadedSurface->format, 0, 255, 255 ) );
+		junior = SDL_CreateTextureFromSurface( gRenderer, loadedSurface );
+
+		if(loadedSurface!=NULL){
+			SDL_FreeSurface( loadedSurface );
+		}
+
+		//Clip
+		for(int i = 0; i < 18; i++){
+			clip[i].x = CASE*i;
+			clip[i].y = 0;
+			clip[i].w = CASE;
+			clip[i].h = CASE;
+		}
+
+
+	}
 
 }
-
-
 Graphic::~Graphic(void)
 {
 	SDL_DestroyTexture(bg);
 	SDL_DestroyTexture(pan);
+	SDL_DestroyTexture(pacman);
+	SDL_DestroyTexture(junior);
+	SDL_DestroyTexture(ghost);
 }
 
 void Graphic::display(SDL_Texture* mTexture, int x, int y, int frame){
@@ -70,8 +96,6 @@ void Graphic::refresh(){
 
 bool Graphic::displayEntities(vector<Entity> tableEntities, bool attack){
 	bool retour=false;
-	SDL_Surface* loadedSurface=NULL;
-	SDL_Texture* tex=NULL;
 	SDL_Rect clap;
 	clap.x=0;
 	clap.y=0;
@@ -90,15 +114,17 @@ bool Graphic::displayEntities(vector<Entity> tableEntities, bool attack){
 	vector<Entity>::iterator cursor;
 	for(cursor= tableEntities.begin();cursor!=tableEntities.end();cursor++){
 		if(!cursor->isDead()){
-			loadedSurface = SDL_LoadBMP(cursor->getLoader().c_str());
-			SDL_SetColorKey( loadedSurface, SDL_TRUE, SDL_MapRGB( loadedSurface->format, 0, 255, 255 ) );
-			tex=SDL_CreateTextureFromSurface( gRenderer, loadedSurface );
-			render(tex, cursor->getPosX(), cursor->getPosY(), &clap);
-			SDL_FreeSurface( loadedSurface );
-			SDL_DestroyTexture(tex);
+			if(cursor->getNameEntity()=="ghost"){
+				render(ghost, cursor->getPosX(), cursor->getPosY(), &clap);
+			}else if(cursor->getNameEntity()=="Pacman"){
+				render(pacman, cursor->getPosX(), cursor->getPosY(), &clap);
+			}else{
+				render(junior, cursor->getPosX(), cursor->getPosY(), &clap);
+			}
+
 		}
 	}
-	
+
 	if(attack || frame>0){
 		if(frame ==0){
 			frame=15;
@@ -142,7 +168,7 @@ bool Graphic::displayEntities(vector<Entity> tableEntities, bool attack){
 	}
 
 
-return retour;
+	return retour;
 }
 
 void Graphic::render(SDL_Texture* mTexture, int x, int y, SDL_Rect* clip)

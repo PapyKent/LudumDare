@@ -10,6 +10,7 @@ Map::Map(SDL_Renderer* g)
 	level=0;
 
 	chargerTableau("map.txt");
+
 }
 
 
@@ -124,13 +125,13 @@ bool Map:: checkMove(int x, int y, int or){
 	}
 	else if(or==2){
 		if(y<31)
-			if(tableau[x][y+1]=='0')return true;
+			if(tableau[x][y+1]=='0' || tableau[x][y+1]=='H')return true;
 			else return false;
 
 	}
 	else if(or==3){
 		if(x<24)
-			if(tableau[x+1][y]=='0')return true;
+			if(tableau[x+1][y]=='0' || tableau[x+1][y]=='H')return true;
 			else return false;
 
 	}
@@ -203,6 +204,7 @@ int Map::getEntityY(int index){
 
 
 void Map::activateAI(void){
+	srand(time(NULL));
 	int actualX;int  actualY;
 	vector<Entity>::iterator cursor;
 	int heroX;
@@ -359,16 +361,16 @@ void Map::activateHeroAttack(){
 
 	switch(orientation){
 	case 1:
-		rangeX+=-50;
+		rangeX+=-60;
 		break;
 	case 2:
-		rangeY+=50+CASE;
+		rangeY+=60+CASE;
 		break;
 	case 3:
-		rangeX+=50+CASE;
+		rangeX+=60+CASE;
 		break;
 	case 4:
-		rangeY+=-50;
+		rangeY+=-60;
 		break;
 	}
 	casedegatX =posXhero+rangeX;

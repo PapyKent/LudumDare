@@ -4,18 +4,19 @@
 
 Graphic::Graphic(SDL_Window* wind ,SDL_Renderer* gRend)
 {
+	frame=0;
 	gRenderer=gRend;
 	window = wind;
 	SDL_Surface* loadedSurface = SDL_LoadBMP("map.bmp");
 	bg = SDL_CreateTextureFromSurface( gRenderer, loadedSurface );
-	SDL_Surface* loadedSurface2 = SDL_LoadBMP("pan.bmp");
+	SDL_Surface* loadedSurface2 = SDL_LoadBMP("bam.bmp");
 	SDL_SetColorKey(loadedSurface2, SDL_TRUE, SDL_MapRGB( loadedSurface2->format, 0, 255, 255 ) );
 	pan = SDL_CreateTextureFromSurface( gRenderer, loadedSurface2 );
 	SDL_FreeSurface( loadedSurface );
 	SDL_FreeSurface( loadedSurface2 );
 
 	//Clip
-	for(int i = 0; i < 16; i++){
+	for(int i = 0; i < 18; i++){
 		clip[i].x = CASE*i;
 		clip[i].y = 0;
 		clip[i].w = CASE;
@@ -93,7 +94,11 @@ void Graphic::displayEntities(vector<Entity> tableEntities, bool attack){
 			SDL_FreeSurface( loadedSurface );
 		}
 	}
-	if(attack){
+	if(attack || frame>0){
+		if(frame ==0){
+			frame=15;
+		}
+		frame--;
 		int coordX = tableEntities[0].getPosX();
 		int coordY = tableEntities[0].getPosY();
 		int orient = tableEntities[0].getEntityOrientation();
@@ -106,13 +111,13 @@ void Graphic::displayEntities(vector<Entity> tableEntities, bool attack){
 			}
 			break;
 		case 2:
-			coordY+=CASE*2;
+			coordY+=CASE;
 			if(coordY<=1024){
 				render(pan, coordX, coordY, &cloup[orient-1]);
 			}
 			break;
 		case 3:
-			coordX+=CASE*2;
+			coordX+=CASE;
 			if(coordX<=768){
 				render(pan, coordX, coordY, &cloup[orient-1]);
 			}

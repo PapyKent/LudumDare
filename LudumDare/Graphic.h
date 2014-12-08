@@ -9,9 +9,10 @@ class Graphic
 {
 	SDL_Renderer* gRenderer;
 	SDL_Window* window;
-	SDL_Rect clip[ 16 ];
+	SDL_Rect clip[ 18 ];
 	SDL_Texture *bg;
 	SDL_Texture *pan;
+	int frame;
 
 public:
 	Graphic(SDL_Window* window, SDL_Renderer* gRenderer);

@@ -38,7 +38,7 @@ Context::Context(void)
 	graphicEngine=new Graphic(window, gRenderer);
 
 	audioEngine=new Audio();
-	//audioEngine->start(1);
+	audioEngine->start(1);
 
 	map=new Map(gRenderer);
 	Hero* test = new Hero("ghost", 0, 1, 1, "ghost1.bmp", 0);
@@ -46,11 +46,14 @@ Context::Context(void)
 	test->setPosY(0);
 	map->addEntity(test);
 
-	Pacman* test2 = new Pacman("Pacman", 4, 1, 50, "pacman.bmp", 0);
+	Pacman* test2 = new Pacman("Pacman", 4, 1, 10, "pacman.bmp", 0);
 	map->addEntity(test2);
 
 	for(int i = 0; i < 6; i ++){
 		map->addEntity(new Mob("Pacman", 3, 1, 1, "junior.bmp", 0));
+	}
+	for(int i = 0; i < 6; i++){
+		map->addEntity(new Mob("junior", 3, 1, 1, "junior.bmp", 0));
 	}
 
 }
@@ -74,7 +77,8 @@ Context::~Context(void)
 
 
 
-bool Context::launchGame(){
+bool Context::launchGame(int niveau){
+
 	bool quit=false;
 	SDL_Event e;
 	srand(time(NULL));
@@ -86,7 +90,7 @@ bool Context::launchGame(){
 
 	bool attack=false;
 
-	map->respawn();
+	map->respawn(niveau);
 
 	while(!quit){
 
@@ -182,7 +186,7 @@ bool Context::launchGame(){
 
 		if(map->heroDead()){
 
-			map->respawn();
+			map->respawn(niveau);
 			haut=false;
 			bas=false;
 			droite=false;
@@ -193,7 +197,7 @@ bool Context::launchGame(){
 			attack=false;
 
 
-		if(victory(map->getEntityX(0), map->getEntityY(0))){
+		if(victory(map->getEntityX(0), map->getEntityY(0), niveau)){
 			return true;
 		}
 
@@ -217,10 +221,15 @@ bool Context::createRenderer()
 	return true;
 }
 
-bool Context::victory(int posx, int posy)
+bool Context::victory(int posx, int posy, int niveau)
 {
 	int xTarget=23;
 	int yTarget=31;
+
+	if(niveau==2){
+		xTarget=0;
+		yTarget=0;
+	}
 
 	if(posx/32==xTarget && posy/32==yTarget){
 		return true;
@@ -228,7 +237,7 @@ bool Context::victory(int posx, int posy)
 	return false;
 }
 
-bool Context::gameOver(){
+bool Context::gameOver(int niveau){
 
 	SDL_RenderClear( gRenderer );
 	bool quit=false;

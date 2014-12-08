@@ -12,6 +12,7 @@ Graphic::Graphic(SDL_Window* wind ,SDL_Renderer* gRend)
 	SDL_Surface* loadedSurface2 = SDL_LoadBMP("bam.bmp");
 	SDL_SetColorKey(loadedSurface2, SDL_TRUE, SDL_MapRGB( loadedSurface2->format, 0, 255, 255 ) );
 	pan = SDL_CreateTextureFromSurface( gRenderer, loadedSurface2 );
+
 	SDL_FreeSurface( loadedSurface );
 	SDL_FreeSurface( loadedSurface2 );
 
@@ -30,6 +31,7 @@ Graphic::Graphic(SDL_Window* wind ,SDL_Renderer* gRend)
 Graphic::~Graphic(void)
 {
 	SDL_DestroyTexture(bg);
+	SDL_DestroyTexture(pan);
 }
 
 void Graphic::display(SDL_Texture* mTexture, int x, int y, int frame){
@@ -92,6 +94,7 @@ void Graphic::displayEntities(vector<Entity> tableEntities, bool attack){
 			tex=SDL_CreateTextureFromSurface( gRenderer, loadedSurface );
 			render(tex, cursor->getPosX(), cursor->getPosY(), &clap);
 			SDL_FreeSurface( loadedSurface );
+			SDL_DestroyTexture(tex);
 		}
 	}
 	if(attack || frame>0){

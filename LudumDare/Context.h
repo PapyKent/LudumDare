@@ -21,12 +21,12 @@ public:
 	Context(void);
 	~Context(void);
 	bool init();
-	bool launchGame();
+	bool launchGame(int niveau);
 	bool restart();
 	bool quit();
 	bool createRenderer();
-	bool victory(int, int);
-	bool gameOver();
+	bool victory(int, int, int niveau);
+	bool gameOver(int niveau);
 	
 };
 

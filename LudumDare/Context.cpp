@@ -58,7 +58,16 @@ Context::Context(void)
 	  audioEngine=new Audio();
 	  audioEngine->playMenu();
 	 
-	  SDL_Delay(3500);
+	  SDL_Delay(3000);
+
+	  gHelloWorld = SDL_LoadBMP( "picture/control.bmp" ); 
+	if( gHelloWorld == NULL ) { 
+	printf( "Unable to load image %s! SDL Error: %s\n", "02_getting_an_image_on_the_screen/hello_world.bmp", SDL_GetError() );
+	 } 
+
+	 SDL_BlitSurface( gHelloWorld, NULL, gScreenSurface, NULL );
+	  SDL_UpdateWindowSurface( window );
+	  SDL_Delay(3000);
 
   audioEngine->playGunEffect();
    SDL_Delay(500);
@@ -229,7 +238,7 @@ bool Context::launchGame(int niveau){
 			gauche=false;
 		}
 		graphicEngine->displayBackground(*map);
-		graphicEngine->displayEntities(map->getTableEntities(), attack) ;
+		if(graphicEngine->displayEntities(map->getTableEntities(), attack )&& attack==true) audioEngine->playGunEffect();
 
 			attack=false;
 
@@ -242,6 +251,16 @@ bool Context::launchGame(int niveau){
 		graphicEngine->refresh();
 
 	}
+
+	 gHelloWorld = SDL_LoadBMP( "picture/end.bmp" ); 
+	if( gHelloWorld == NULL ) { 
+	printf( "Unable to load image %s! SDL Error: %s\n", "02_getting_an_image_on_the_screen/hello_world.bmp", SDL_GetError() );
+	 } 
+
+	 SDL_BlitSurface( gHelloWorld, NULL, gScreenSurface, NULL );
+	  SDL_UpdateWindowSurface( window );
+
+	  SDL_Delay(3000);
 
 	return false;
 }

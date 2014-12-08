@@ -347,7 +347,8 @@ void Map::bamHero(bool b){
 }
 
 
-void Map::activateHeroAttack(){
+bool Map::activateHeroAttack(){
+	bool retour=false;
 	int orientation = tableEntities[0].getEntityOrientation();
 	vector<Entity>::iterator cursor;
 	int rangeX=0;
@@ -405,9 +406,11 @@ void Map::activateHeroAttack(){
 				tableEntities[i].takeDMG(1, false);
 			}
 			break;
+		default:retour=false;
+			break;
 		}
 
-
+		return retour;
 	}
 }
 /*

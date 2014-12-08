@@ -19,7 +19,7 @@ public:
 	~Graphic(void);
 
 	void displayBackground(Map map);
-	void displayEntities(vector<Entity>, bool);
+	bool displayEntities(vector<Entity>, bool);
 	void refresh();
 	void display(SDL_Texture* mTexture, int x, int y, int frame);
 	void render(SDL_Texture*, int x, int y, SDL_Rect* clip );

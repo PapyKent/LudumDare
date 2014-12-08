@@ -8,17 +8,35 @@ Audio::Audio(void)
 		printf( "SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError() );
 	}
 	//Load music
-	ambiant = Mix_LoadMUS( "sound/La_chanson_de_PacMan_1985.wav" );
+	ambiant = Mix_LoadMUS( "sound/8bit_Dungeon_Boss.wav" );
 	if( ambiant == NULL )
 	{
 		printf( "Failed to load beat music! SDL_mixer Error: %s\n", Mix_GetError() );
 	}
 
+	gunEffect = Mix_LoadWAV( "sound/piew.wav" );
+
+	if(  gunEffect == NULL ){
+		printf( "Failed to load beat effect! SDL_mixer Error: %s\n", Mix_GetError() );
+	}
+
+	gameOver = Mix_LoadWAV( "sound/hit.wav" );
+
+	if( gameOver == NULL ){
+		printf( "Failed to load beat effect! SDL_mixer Error: %s\n", Mix_GetError() );
+	}
+
+	win = Mix_LoadWAV( "sound/win.wav" );
+
+	if(  win == NULL ){
+		printf( "Failed to load beat effect! SDL_mixer Error: %s\n", Mix_GetError() );
+	}
 }
 
 
 Audio::~Audio(void)
 {
+	Mix_FreeChunk( gunEffect ); Mix_FreeChunk( gameOver ); Mix_FreeChunk( win );
 	Mix_FreeMusic(ambiant);
 	ambiant = NULL;
 	Mix_Quit();
@@ -31,4 +49,17 @@ void Audio::start(int level){
 		//Play the music
 		Mix_PlayMusic( ambiant, -1 );
 	}
+}
+
+
+int Audio::playGunEffect(){
+	if( Mix_PlayChannel( -1, gunEffect, 0 ) == -1 ) { return 1; }
+}
+
+int Audio::playWinEffect(){
+	if( Mix_PlayChannel( -1, win, 0 ) == -1 ) { return 1; }
+}
+
+int Audio::playGameOverEffect(){
+	if( Mix_PlayChannel( -1, gameOver, 0 ) == -1 ) { return 1; }
 }

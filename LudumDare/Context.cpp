@@ -51,11 +51,11 @@ Context::Context(void)
 
 	for(int i = 0; i < 6; i ++){
 		map->addEntity(new Mob("Pacman", 3, 1, 1, "junior.bmp", 0));
-	}
+	}/*
 	for(int i = 0; i < 6; i++){
 		map->addEntity(new Mob("junior", 3, 1, 1, "junior.bmp", 0));
 	}
-
+	*/
 }
 
 Context::~Context(void)
@@ -149,6 +149,8 @@ bool Context::launchGame(int niveau){
 				} 
 				if(e.key.keysym.sym ==SDLK_SPACE){
 					attack = true;
+					
+					
 				}
 			}
 
@@ -157,7 +159,9 @@ bool Context::launchGame(int niveau){
 
 		}
 		if(attack){
-			map->activateHeroAttack();
+			
+			map->activateHeroAttack(); 
+
 		}
 
 		if(droite)key=2;
@@ -179,13 +183,13 @@ bool Context::launchGame(int niveau){
 		map->moveEntities();
 
 		for(int i=1; i < map->getTableEntities().size(); i++){
-			if(physicEngine->collision(map->getEntityX(0),map->getEntityY(0), map->getEntityX(i), map->getEntityY(i) )){
+			if(physicEngine->collision(map->getEntityX(0),map->getEntityY(0), map->getEntityX(i), map->getEntityY(i) ) ){
 				map->bam(i);
 			}
 		}
 
 		if(map->heroDead()){
-
+			audioEngine->playGameOverEffect();
 			map->respawn(niveau);
 			haut=false;
 			bas=false;
@@ -193,11 +197,13 @@ bool Context::launchGame(int niveau){
 			gauche=false;
 		}
 		graphicEngine->displayBackground(*map);
-		graphicEngine->displayEntities(map->getTableEntities(), attack);
+		if(graphicEngine->displayEntities(map->getTableEntities(), attack) && attack==true)audioEngine->playGunEffect();
+
 			attack=false;
 
 
 		if(victory(map->getEntityX(0), map->getEntityY(0), niveau)){
+			audioEngine->playWinEffect();
 			return true;
 		}
 

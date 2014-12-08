@@ -4,10 +4,18 @@
 class Audio{
 private:
 	Mix_Music* ambiant;
-	vector <string> soundEffect;
+	Mix_Chunk *gunEffect ;
+	Mix_Chunk *gameOver ;
+	Mix_Chunk *win ;
+
 public:
 	Audio(void);
 	~Audio(void);
+	int playGunEffect(void);
+	int playWinEffect(void);
+	int playGameOverEffect(void);
+
+
 	void start(int);
 };
 

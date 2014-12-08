@@ -56,6 +56,6 @@ public:
 	void respawn(int);
 	void bamHero(bool);
 	
-	void activateHeroAttack();
+	bool activateHeroAttack();
 };
 

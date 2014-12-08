@@ -68,7 +68,8 @@ void Graphic::refresh(){
 }
 
 
-void Graphic::displayEntities(vector<Entity> tableEntities, bool attack){
+bool Graphic::displayEntities(vector<Entity> tableEntities, bool attack){
+	bool retour=false;
 	SDL_Surface* loadedSurface=NULL;
 	SDL_Texture* tex=NULL;
 	SDL_Rect clap;
@@ -97,6 +98,7 @@ void Graphic::displayEntities(vector<Entity> tableEntities, bool attack){
 			SDL_DestroyTexture(tex);
 		}
 	}
+	
 	if(attack || frame>0){
 		if(frame ==0){
 			frame=15;
@@ -111,24 +113,28 @@ void Graphic::displayEntities(vector<Entity> tableEntities, bool attack){
 			coordX-=CASE;
 			if(coordX>=0){
 				render(pan, coordX, coordY, &cloup[orient-1]);
+				retour=true;
 			}
 			break;
 		case 2:
 			coordY+=CASE;
 			if(coordY<=1024){
 				render(pan, coordX, coordY, &cloup[orient-1]);
+				retour=true;
 			}
 			break;
 		case 3:
 			coordX+=CASE;
 			if(coordX<=768){
 				render(pan, coordX, coordY, &cloup[orient-1]);
+				retour=true;
 			}
 			break;
 		case 4:
 			coordY-=CASE;
 			if(coordY>=0){
 				render(pan, coordX, coordY, &cloup[orient-1]);
+				retour=true;
 			}
 			break;
 		}
@@ -136,7 +142,7 @@ void Graphic::displayEntities(vector<Entity> tableEntities, bool attack){
 	}
 
 
-
+return retour;
 }
 
 void Graphic::render(SDL_Texture* mTexture, int x, int y, SDL_Rect* clip)

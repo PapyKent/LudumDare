@@ -13,7 +13,7 @@ Map::Map(SDL_Renderer* g)
 
 }
 
-
+///////////////
 Map::~Map(void)
 {
 // hihi

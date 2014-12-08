@@ -64,17 +64,21 @@ void Audio::start(int level){
 
 int Audio::playGunEffect(){
 	if( Mix_PlayChannel( -1, gunEffect, 0 ) == -1 ) { return 1; }
+	return 0;
 }
 
 int Audio::playWinEffect(){
 	if( Mix_PlayChannel( -1, win, 0 ) == -1 ) { return 1; }
+	return 0;
 }
 
 int Audio::playGameOverEffect(){
 	if( Mix_PlayChannel( -1, gameOver, 0 ) == -1 ) { return 1; }
+	return 0;
 }
 
 
 int Audio::playMenu(){
 	if( Mix_PlayChannel( -1,menu, 0 ) == -1 ) { return 1; }
+	return 0;
 }

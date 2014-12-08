@@ -9,7 +9,7 @@ int main( int argc, char* args[] )
 	bool continuer=true;
 	while(continuer && game.launchGame(niveau)){
 		continuer = game.gameOver(niveau);
-		if(niveau<1){
+		if(niveau<2){
 			niveau++;
 		}
 

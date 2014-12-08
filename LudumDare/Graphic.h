@@ -15,13 +15,14 @@ class Graphic
 	SDL_Texture *pacman;
 	SDL_Texture *junior;
 	SDL_Texture *ghost;
+	SDL_Texture* sortie;
 	int frame;
 
 public:
 	Graphic(SDL_Window* window, SDL_Renderer* gRenderer);
 	~Graphic(void);
 
-	void displayBackground(Map map);
+	void displayBackground(Map map, int niveau);
 	bool displayEntities(vector<Entity>, bool);
 	void refresh();
 	void display(SDL_Texture* mTexture, int x, int y, int frame);

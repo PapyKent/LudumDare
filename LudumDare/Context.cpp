@@ -48,7 +48,7 @@ Context::Context(void)
 		 gScreenSurface = SDL_GetWindowSurface( window ); 
 	}
 
-	gHelloWorld = SDL_LoadBMP( "picture/gameover.bmp" ); 
+	gHelloWorld = SDL_LoadBMP( "picture/accueil.bmp" ); 
 	if( gHelloWorld == NULL ) { 
 	printf( "Unable to load image %s! SDL Error: %s\n", "02_getting_an_image_on_the_screen/hello_world.bmp", SDL_GetError() );
 	 } 
@@ -89,13 +89,13 @@ Context::Context(void)
 	Pacman* test2 = new Pacman("Pacman", 4, 1, 10, "pacman.bmp", 0);
 	map->addEntity(test2);
 
-	for(int i = 0; i < 9; i ++){
-		map->addEntity(new Mob("junior", 3, 1, 1, "junior.bmp", 0));
-	}/*
+	for(int i = 0; i < 7; i ++){
+		map->addEntity(new Mob("Pacman", 3, 1, 1, "junior.bmp", 0));
+	}
 	for(int i = 0; i < 6; i++){
 		map->addEntity(new Mob("junior", 3, 1, 1, "junior.bmp", 0));
 	}
-	*/
+	
 }
 
 Context::~Context(void)
@@ -237,7 +237,7 @@ bool Context::launchGame(int niveau){
 			droite=false;
 			gauche=false;
 		}
-		graphicEngine->displayBackground(*map);
+		graphicEngine->displayBackground(*map, niveau);
 		if(graphicEngine->displayEntities(map->getTableEntities(), attack )&& attack==true) audioEngine->playGunEffect();
 
 			attack=false;
@@ -297,30 +297,21 @@ bool Context::victory(int posx, int posy, int niveau)
 bool Context::gameOver(int niveau){
 
 	SDL_RenderClear( gRenderer );
+
 	bool quit=false;
 	SDL_Event e;
-
-	while(!quit){
-
-		while(SDL_PollEvent(&e) !=0){
-			if( e.type == SDL_QUIT )
-			{
-				quit = true;
-			}
-			//User presses a key
-			else if( e.type == SDL_KEYDOWN )
-			{
-
-				//Select surfaces based on key press
-				switch( e.key.keysym.sym ) { 
-				case SDLK_SPACE:
-					return true;
-				}
-			}
-		}
-
-
+	if(niveau==1){
+		return true;
 	}
+	if(niveau == 2){
+			SDL_Surface* fin = SDL_LoadBMP( "picture/win.bmp" ); 
+				 SDL_BlitSurface( fin, NULL, gScreenSurface, NULL );
+				 SDL_UpdateWindowSurface( window );
+				 SDL_Delay(5000);
+
+		return false;
+	}
+
 	return false;
 }
 

@@ -579,7 +579,107 @@ void Map::respawn(int niveau){
 			tmp++;
 		}
 	}else{
+				int tmp=0;
+		vector<Entity>::iterator cursor;
+		for(cursor=tableEntities.begin();cursor!=tableEntities.end();cursor++){
 
+			switch(tmp){
+
+			case 0:
+				cursor->setPosX(23*CASE);
+				cursor->setPosY(30*CASE);
+				cursor->setHp(1);
+				cursor->setEntitySpeed(0);
+				break;
+
+			case 1:
+				cursor->setPosX(9*CASE);
+				cursor->setPosY(6*CASE);
+				cursor->setHp(10);
+				break;
+
+			case 2:
+				cursor->setPosX(19*CASE);
+				cursor->setPosY(6*CASE);
+				cursor->setHp(1);
+				break;
+
+			case 3:
+				cursor->setPosX(18*CASE);
+				cursor->setPosY(16*CASE);
+				cursor->setHp(1);
+				break;
+
+			case 4:
+				cursor->setPosX(19*CASE);
+				cursor->setPosY(2*CASE);
+				cursor->setHp(1);
+				break;
+
+			case 5:
+				cursor->setPosX(10*CASE);
+				cursor->setPosY(8*CASE);
+				cursor->setHp(1);
+				break;
+
+			case 6:
+				cursor->setPosX(16*CASE);
+				cursor->setPosY(0*CASE);
+				cursor->setHp(1);
+				break;
+
+			case 7:
+				cursor->setPosX(4*CASE);
+				cursor->setPosY(26*CASE);
+				cursor->setHp(1);
+				break;
+
+			case 8:
+				cursor->setPosX(3*CASE);
+				cursor->setPosY(17*CASE);
+				cursor->setHp(1);
+				break;
+
+			case 9:
+				cursor->setPosX(0*CASE);
+				cursor->setPosY(0*CASE);
+				cursor->setHp(1);
+				break;
+			case 10:
+				cursor->setPosX(15*CASE);
+				cursor->setPosY(8*CASE);
+				cursor->setHp(1);
+				break;
+			case 11:
+				cursor->setPosX(23*CASE);
+				cursor->setPosY(3*CASE);
+				cursor->setHp(1);
+				break;
+			case 12:
+				cursor->setPosX(22*CASE);
+				cursor->setPosY(23*CASE);
+				cursor->setHp(1);
+				break;
+			case 13:
+				cursor->setPosX(18*CASE);
+				cursor->setPosY(15*CASE);
+				cursor->setHp(1);
+				break;
+			case 14:
+				cursor->setPosX(4*CASE);
+				cursor->setPosY(8*CASE);
+				cursor->setHp(1);
+				break;
+			case 15:
+				cursor->setPosX(20*CASE);
+				cursor->setPosY(17*CASE);
+				cursor->setHp(1);
+				break;
+
+
+			}
+			tmp++;
+		}
 	}
 
 }

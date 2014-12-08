@@ -39,6 +39,13 @@ Graphic::Graphic(SDL_Window* wind ,SDL_Renderer* gRend)
 			SDL_FreeSurface( loadedSurface );
 		}
 
+	loadedSurface = SDL_LoadBMP("sortie.bmp");
+	SDL_SetColorKey(loadedSurface, SDL_TRUE, SDL_MapRGB( loadedSurface->format, 0, 255, 255 ) );
+	sortie = SDL_CreateTextureFromSurface( gRenderer, loadedSurface );
+	if(loadedSurface!=NULL){
+		SDL_FreeSurface( loadedSurface );
+	}
+
 		//Clip
 		for(int i = 0; i < 18; i++){
 			clip[i].x = CASE*i;
@@ -58,6 +65,7 @@ Graphic::~Graphic(void)
 	SDL_DestroyTexture(pacman);
 	SDL_DestroyTexture(junior);
 	SDL_DestroyTexture(ghost);
+	SDL_DestroyTexture(sortie);
 }
 
 void Graphic::display(SDL_Texture* mTexture, int x, int y, int frame){
@@ -70,12 +78,17 @@ void Graphic::display(SDL_Texture* mTexture, int x, int y, int frame){
 
 }
 
-void Graphic::displayBackground(Map map){
+void Graphic::displayBackground(Map map, int niveau){
 	int index=0;
 
 	for(int i = 0; i < SCREEN_HEIGHT/32; i++){
 		for(int j = 0; j < SCREEN_WIDTH/32; j++){
 			index= map.getTab(i, j);
+			if(index=='H'){
+				if(niveau==2){
+					index='0';
+				}
+			}
 			if(index<=57 && index>=48){
 				render(bg, i*32, j*32, &clip[index-'0']);
 			}else{
@@ -85,6 +98,9 @@ void Graphic::displayBackground(Map map){
 
 
 		}
+	}
+	if(niveau==2){
+		render(sortie, 0, 0, &clip[0]);
 	}
 
 }
@@ -116,7 +132,7 @@ bool Graphic::displayEntities(vector<Entity> tableEntities, bool attack){
 		if(!cursor->isDead()){
 			if(cursor->getNameEntity()=="ghost"){
 				render(ghost, cursor->getPosX(), cursor->getPosY(), &clap);
-			}else if(cursor->getNameEntity()=="Pacman"){
+			}else if(cursor->getLoader()=="pacman.bmp"){
 				render(pacman, cursor->getPosX(), cursor->getPosY(), &clap);
 			}else{
 				render(junior, cursor->getPosX(), cursor->getPosY(), &clap);

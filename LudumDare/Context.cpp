@@ -20,6 +20,7 @@ Context::Context(void)
 	{
 		//Create window
 		window = SDL_CreateWindow( "Pacman", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
+
 		if( window == NULL )
 		{
 			printf( "Window could not be created! SDL_Error: %s\n", SDL_GetError() );
@@ -31,13 +32,43 @@ Context::Context(void)
 		}
 	}
 
+	 
+	 //The surface contained by the window 
+	gScreenSurface = NULL; 
+	//The image we will load and show on the screen 
+	gHelloWorld = NULL;
+
+	 //Create window 
+ 
+	if( window == NULL ) { 
+		printf( "Window could not be created! SDL_Error: %s\n", SDL_GetError() ); 
+	
+	} else { 
+	//Get window 
+		 gScreenSurface = SDL_GetWindowSurface( window ); 
+	}
+
+	gHelloWorld = SDL_LoadBMP( "picture/gameover.bmp" ); 
+	if( gHelloWorld == NULL ) { 
+	printf( "Unable to load image %s! SDL Error: %s\n", "02_getting_an_image_on_the_screen/hello_world.bmp", SDL_GetError() );
+	 } 
+
+	 SDL_BlitSurface( gHelloWorld, NULL, gScreenSurface, NULL );
+	  SDL_UpdateWindowSurface( window );
+	  audioEngine=new Audio();
+	  audioEngine->playMenu();
+	 
+	  SDL_Delay(3500);
+
+  audioEngine->playGunEffect();
+   SDL_Delay(500);
 	createRenderer();
 
 	physicEngine=new Physic();
 
 	graphicEngine=new Graphic(window, gRenderer);
 
-	audioEngine=new Audio();
+	
 	audioEngine->start(1);
 
 	map=new Map(gRenderer);
@@ -49,8 +80,8 @@ Context::Context(void)
 	Pacman* test2 = new Pacman("Pacman", 4, 1, 10, "pacman.bmp", 0);
 	map->addEntity(test2);
 
-	for(int i = 0; i < 6; i ++){
-		map->addEntity(new Mob("Pacman", 3, 1, 1, "junior.bmp", 0));
+	for(int i = 0; i < 9; i ++){
+		map->addEntity(new Mob("junior", 3, 1, 1, "junior.bmp", 0));
 	}/*
 	for(int i = 0; i < 6; i++){
 		map->addEntity(new Mob("junior", 3, 1, 1, "junior.bmp", 0));
@@ -60,12 +91,13 @@ Context::Context(void)
 
 Context::~Context(void)
 {
-
+	SDL_FreeSurface( gHelloWorld ); 
+	gHelloWorld = NULL; 
 	SDL_DestroyWindow( window );
 	delete(graphicEngine);
 	delete(audioEngine);
 	delete(map);
-
+	
 	SDL_DestroyRenderer(gRenderer);
 	//Destroy window
 	SDL_DestroyWindow( window );
@@ -197,7 +229,7 @@ bool Context::launchGame(int niveau){
 			gauche=false;
 		}
 		graphicEngine->displayBackground(*map);
-		if(graphicEngine->displayEntities(map->getTableEntities(), attack) && attack==true)audioEngine->playGunEffect();
+		graphicEngine->displayEntities(map->getTableEntities(), attack) ;
 
 			attack=false;
 

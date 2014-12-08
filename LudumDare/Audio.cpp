@@ -31,13 +31,23 @@ Audio::Audio(void)
 	if(  win == NULL ){
 		printf( "Failed to load beat effect! SDL_mixer Error: %s\n", Mix_GetError() );
 	}
+
+	menu = Mix_LoadWAV( "sound/menu.wav" );
+
+	if(  menu == NULL ){
+		printf( "Failed to load beat effect! SDL_mixer Error: %s\n", Mix_GetError() );
+	}
 }
 
 
 Audio::~Audio(void)
 {
-	Mix_FreeChunk( gunEffect ); Mix_FreeChunk( gameOver ); Mix_FreeChunk( win );
+	Mix_FreeChunk( gunEffect ); Mix_FreeChunk( gameOver ); Mix_FreeChunk( win );Mix_FreeChunk( menu );
 	Mix_FreeMusic(ambiant);
+	ambiant = NULL;
+	gameOver = NULL;
+	win= NULL;
+	menu = NULL;
 	ambiant = NULL;
 	Mix_Quit();
 }
@@ -62,4 +72,9 @@ int Audio::playWinEffect(){
 
 int Audio::playGameOverEffect(){
 	if( Mix_PlayChannel( -1, gameOver, 0 ) == -1 ) { return 1; }
+}
+
+
+int Audio::playMenu(){
+	if( Mix_PlayChannel( -1,menu, 0 ) == -1 ) { return 1; }
 }

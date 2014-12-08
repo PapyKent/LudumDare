@@ -9,8 +9,8 @@ class Physic;
 class Context
 {
 private:
-
-
+	SDL_Surface* gScreenSurface;
+	SDL_Surface* gHelloWorld;
 	SDL_Window* window;
 	SDL_Renderer* gRenderer;
 	Map* map;
